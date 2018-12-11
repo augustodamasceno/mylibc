@@ -51,7 +51,7 @@ void matrixFree(double ** matrix, int r, int c);
 /* Receive a function as parameter */
 void functionParameter(float(*fun)(float,float)); 
 
-/* Get begin time to measure performance */
+/* Get time to measure performance */
 #ifdef __unix__
 	struct timeval getTime(void);
 	double getTimeInterval(struct timeval begin, struct timeval _end);

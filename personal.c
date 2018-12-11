@@ -55,7 +55,7 @@ void functionParameter(float(*fun)(float,float))
 	printf("functionParameter: %.4f\n",fun(2.0,3.0));
 }
 
-/* Get begin time to measure performance */
+/* Get time to measure performance */
 #ifdef __unix__
 	struct timeval getTime(void)
 	{	
