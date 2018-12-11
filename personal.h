@@ -34,8 +34,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <inttypes.h>
-/* for time */
+/* for time, CLOCKS_PER_SEC */
 #include <time.h>
+/* Libs for Unix and Unix-like systems */
+#ifdef __unix__
+	/* for gettimeofday */
+    #include <sys/time.h>
+#endif
 
 /* Matrix Memory Allocation */
 double ** matrixAlloc(int r, int c);
@@ -45,5 +50,15 @@ void matrixFree(double ** matrix, int r, int c);
 
 /* Receive a function as parameter */
 void functionParameter(float(*fun)(float,float)); 
+
+/* Get begin time to measure performance */
+#ifdef __unix__
+	struct timeval getTime(void);
+	double getTimeInterval(struct timeval begin, struct timeval _end);
+#else
+	clock_t getTime(void);
+	double getTimeInterval(clock_t begin, clock_t _end);
+#endif
+
 
 #endif /* _PERSONAL_H  */

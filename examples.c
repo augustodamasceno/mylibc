@@ -28,6 +28,8 @@
 
 #include "personal.h"
 
+#define MILION 1000000
+
 
 float myfunction(float a, float b)
 {
@@ -39,7 +41,7 @@ int main(int argc, char ** argv)
 {
 	printf("Usage examples for personalc library.\n\n");
 
-	printf("Example for function ");
+	printf(">> Example for function ");
 	printf("double ** matrixAlloc(int r, int c)\n");
 	printf("r = 2 and c = 3\n\n");
 	double ** matrix = matrixAlloc(2,3);
@@ -61,12 +63,29 @@ int main(int argc, char ** argv)
 	printf("matrixFree(matrix,2,3)\n\n");
 	matrixFree(matrix,2,3);
 
-	printf("Example for function ");
+	printf(">> Example for function ");
 	printf("void functionParameter(float(*fun)(float,float)\n");
 	printf("The function fun returns the sum of arguments\n");
 	functionParameter(myfunction);
-	printf("\n\n");	
-	
+	printf("\n");	
+
+	printf(">> Example for functions ");
+	printf("getTime and getTimeInterval.\n");
+	printf("Calculates sum 100 milion times.\n\n");
+#ifdef __unix__
+	struct timeval begin = getTime();	
+#else
+	clock_t begin = getTime();
+#endif	
+	for(i=0; i<(100*MILION); i++)
+		j++;
+#ifdef __unix__
+	struct timeval _end = getTime();	
+#else
+	clock_t _end = getTime();
+#endif	
+	printf("Elapsed time: %.6f.\n\n",getTimeInterval(begin,_end));
+
 	return 0;
 } 
 
