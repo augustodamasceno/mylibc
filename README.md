@@ -7,7 +7,7 @@ My personal reference to C programming
 ```
 gcc -lm examples.c personal.c -o examples
 ```  
-* Compile - Makefile
+* Compile - Makefile (**Makefile Example!**)
 ```
 make && make clean
 ```
