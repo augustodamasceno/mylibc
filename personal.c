@@ -81,3 +81,10 @@ void functionParameter(float(*fun)(float,float))
 		return  ((float)(begin-_end))/CLOCKS_PER_SEC;
 	}
 #endif
+
+/* Set Color and Style with ANSI SCAPES */
+void setColor(int value)
+{
+	printf("\033[%dm",value);
+}
+

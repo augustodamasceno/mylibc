@@ -39,11 +39,15 @@ float myfunction(float a, float b)
 
 int main(int argc, char ** argv)
 {
+	setColor(GREEN_BRIGHT);
+	setColor(BLACK_BACKGROUND);
 	printf("Usage examples for personalc library.\n\n");
 
 	printf(">> Example for function ");
 	printf("double ** matrixAlloc(int r, int c)\n");
+	setColor(GREEN);
 	printf("r = 2 and c = 3\n\n");
+	setColor(YELLOW);
 	double ** matrix = matrixAlloc(2,3);
 	srand (time(NULL));	/* Initialize random seed */
 	int i,j;
@@ -58,19 +62,25 @@ int main(int argc, char ** argv)
 	}
 	printf("\n");
 
-	/* Free memory for matrix allocated */
-	printf("Free the memory allocated for the matrix.\n");
-	printf("matrixFree(matrix,2,3)\n\n");
+	setColor(GREEN_BRIGHT);
+	printf(">> Free the memory allocated for the matrix.\n");
+	setColor(GREEN);
+	printf("matrixFree(matrix,2,3)\n\n");	
 	matrixFree(matrix,2,3);
 
+	setColor(GREEN_BRIGHT);
 	printf(">> Example for function ");
 	printf("void functionParameter(float(*fun)(float,float)\n");
-	printf("The function fun returns the sum of arguments\n");
+	setColor(GREEN);
+	printf("The function fun returns the sum of arguments\n\n");
+	setColor(YELLOW);
 	functionParameter(myfunction);
-	printf("\n");	
+	printf("\n");
 
+	setColor(GREEN_BRIGHT);
 	printf(">> Example for functions ");
 	printf("getTime and getTimeInterval.\n");
+	setColor(GREEN);
 	printf("Calculates sum 100 milion times.\n\n");
 #ifdef __unix__
 	struct timeval begin = getTime();	
@@ -84,8 +94,46 @@ int main(int argc, char ** argv)
 #else
 	clock_t _end = getTime();
 #endif	
-	printf("Elapsed time: %.6f.\n\n",getTimeInterval(begin,_end));
-
+	setColor(YELLOW);
+	printf("Elapsed time: %.6fs\n\n",getTimeInterval(begin,_end));
+	
+	setColor(GREEN_BRIGHT);
+	printf(">> Examples for function ");
+	printf("void setColor(int value)\n");
+	printf("value = Color Macros\n");
+	setColor(GREEN);
+	printf("Set font color, example: setColor(RED) \n");
+	printf("Set font style, example: setColor(STYLE_UNDERLINE)\n");
+	printf("Set background color, example: setColor(WHITE_BRIGHT_BACKGROUND)\n");
+	printf("After print, reset the color modification: ");
+	printf("setColor(COLOR_RESET)\n\n");
+	setColor(RED);
+	printf("RED\n");
+	setColor(COLOR_RESET);
+	setColor(BLUE_BRIGHT);
+	printf("BLUE_BRIGHT\n");
+	setColor(COLOR_RESET);
+	setColor(YELLOW_BACKGROUND);
+	printf("YELLOW_BACKGROUND\n");
+	setColor(COLOR_RESET);
+	setColor(RED);
+	setColor(MAGENTA_BRIGHT_BACKGROUND);
+	printf("RED + MAGENTA_BRIGHT_BACKGROUND\n");
+	setColor(COLOR_RESET);
+	setColor(BLUE_BRIGHT);
+	setColor(STYLE_BOLD);
+	printf("BLUE_BRIGHT + SYLE_BOLD\n");
+	setColor(COLOR_RESET);
+	setColor(CYAN_BRIGHT);
+	setColor(STYLE_UNDERLINE);
+	printf("CYAN_BRIGHT + STYLE_UNDERLINE\n");
+	setColor(COLOR_RESET);
+	setColor(GREEN);
+	setColor(STYLE_REVERSED);
+	printf("CYAN_BRIGHT + STYLE_REVERSED\n");
+	setColor(COLOR_RESET);
+	
+	setColor(COLOR_RESET);
 	return 0;
 } 
 

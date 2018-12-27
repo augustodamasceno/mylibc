@@ -1,11 +1,16 @@
 # personalc
 My personal reference to C programming  
 
+
 ## Usage examples in file examples.c  
-* Compile 
+* Compile - Command Line 
 ```
 gcc -lm examples.c personal.c -o examples
 ```  
+* Compile - Makefile
+```
+make && make clean
+```
 * Run
 ```
 ./examples
