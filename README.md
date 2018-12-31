@@ -2,7 +2,7 @@
 My personal reference to C programming  
 
 ## To microcontrollers programming see:  
-* (https://github.com/augustomatheuss/mcu-examples) 
+* https://github.com/augustomatheuss/mcu-examples  
 
 ## Usage examples in file examples.c  
 * Compile - Command Line 
