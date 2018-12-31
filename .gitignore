@@ -1,5 +1,6 @@
 # My tests.
 test*
+examples
 
 # Prerequisites
 *.d

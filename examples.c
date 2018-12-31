@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
 		for (j=0; j<3; j++)
 		{
 			matrix[i][j] = ( (float) (rand() % 10000) ) / 100.0;
-			printf("%.2f  ",matrix[i][j]);
+			printf("%05.2f  ",matrix[i][j]);
 		}
 		printf("\n");
 	}
@@ -71,8 +71,7 @@ int main(int argc, char ** argv)
 	setColor(GREEN_BRIGHT);
 	printf(">> Example for function ");
 	printf("void functionParameter(float(*fun)(float,float)\n");
-	setColor(GREEN);
-	printf("The function fun returns the sum of arguments\n\n");
+	printf("fun = float myfunction(float a, float b) { return a + b; }\n");
 	setColor(YELLOW);
 	functionParameter(myfunction);
 	printf("\n");
@@ -130,9 +129,49 @@ int main(int argc, char ** argv)
 	setColor(COLOR_RESET);
 	setColor(GREEN);
 	setColor(STYLE_REVERSED);
-	printf("CYAN_BRIGHT + STYLE_REVERSED\n");
-	setColor(COLOR_RESET);
+	printf("CYAN_BRIGHT + STYLE_REVERSED\n\n");
 	
+	setColor(COLOR_RESET);
+	setColor(BLACK_BACKGROUND);
+	setColor(GREEN_BRIGHT);
+
+	printf(">> Example for function ");
+	printf("void normalize(double * vec, int size)\n");
+	setColor(GREEN);
+	printf("vect = random data, size = 10\n\n");
+	setColor(YELLOW);
+	double * vec = (double*) malloc(sizeof(double)*10);
+	/* Random seed already initialized */
+	printf("Original:\n");
+	for (i=0; i<10; i++)
+	{
+		vec[i] = ( (float) (rand() % 10000) ) / 100.0;
+		printf("%07.4f  ",vec[i]);
+	}
+	printf("\n");
+	printf("Normalized:\n");
+	normalize(vec,10);
+	for (i=0; i<10; i++)
+		printf("%07.4f  ",vec[i]);
+	printf("\n\n");
+	free(vec);
+
+	setColor(GREEN_BRIGHT);
+	printf(">> Example for function double ");
+	printf("getQuantizationLevel(uint64_t binary, ");
+	printf("double minValue, double maxValue)\n");
+	setColor(GREEN);
+	printf("binary = 0b000 to 0b111, nbits = 3, minValue = -5, maxValue = 5\n\n");
+	setColor(YELLOW);
+	uint64_t binary = 0;
+	for (i=0; i<8; i++)
+	{
+		printf("Binary ");
+		printBin(binary+i);
+		printf("\nQuantization Level: %06.4f\n",getQuantizationLevel(binary+i,3,-5,5));
+	}
+	printf("\n\n");
+
 	setColor(COLOR_RESET);
 	return 0;
 } 

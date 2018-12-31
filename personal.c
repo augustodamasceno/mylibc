@@ -88,3 +88,71 @@ void setColor(int value)
 	printf("\033[%dm",value);
 }
 
+/* Normalize data in a vector */
+void normalize(double * vec, int size)
+{
+	int i;
+	double offset = 0;
+
+	/* Find the minor value */
+	for(i=0; i<size; i++)
+	{
+		if ( vec[i] < offset )
+			offset = vec[i];
+	}
+	
+	/* Shift the vector to the positive side and find the maximum */
+	offset *= -1;
+	vec[0] += offset;
+	double max = vec[0];
+	for(i=1; i<size; i++)
+	{
+		vec[i] += offset;
+		if(vec[i] > max)
+			max = vec[i];
+	}
+
+	/* Normalize data */
+	for(i=0; i<size; i++)
+		vec[i] /= max;
+}
+
+/* Print in binary format */
+void printBin(uint64_t value)
+{
+	int i;
+	uint64_t getBit = 1;
+	getBit = getBit<<63;
+	printf("0b");
+	for (i=63; i>=0; i--)
+	{
+		if(getBit & value)
+		{
+			printf("1");
+		}
+		else
+		{
+			printf("0");
+		}
+		getBit = getBit>>1;
+	}
+}
+
+/* Get the continuos value from a quantized binary sample */
+double getQuantizationLevel(uint64_t binary, int nbits, double minValue, double maxValue)
+{
+	int i;
+	uint64_t getbit = 1;
+	double sum = 0;
+	/* Calc from fractional part in fixed point data representation */
+	for(i=(-1*nbits); i<=-1; i++)
+	{
+		if (binary & getbit)
+			sum += pow(2.0, (double) i);
+		
+		getbit = getbit<<1;
+	}
+
+	return sum*(maxValue-minValue)+minValue;
+}
+

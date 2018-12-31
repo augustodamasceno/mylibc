@@ -34,6 +34,7 @@
 #include <stdlib.h>
 /* for printf, scanf, puts, NULL */
 #include <stdio.h>
+/* for pow */
 #include <math.h>
 #include <inttypes.h>
 /* for time, CLOCKS_PER_SEC */
@@ -43,9 +44,13 @@
 	/* for gettimeofday */
     #include <sys/time.h>
 #endif
+/* for uintX_t types  */
+#include <inttypes.h>
 
 /* Macros */
 
+/* Numbers Macros */
+#define UINT64_MAX 9223372036854775807.0
 /* Color Macros*/
 #define BLACK 30
 #define RED 31
@@ -106,5 +111,14 @@ void functionParameter(float(*fun)(float,float));
 
 /* Set Color and Style with ANSI SCAPES */
 void setColor(int value);
+
+/* Normalize data in a vector */
+void normalize(double * vec, int size);
+
+/* Print in binary format */
+void printBin(uint64_t value);
+	
+/* Get the continuos value from a quantized binary sample */
+double getQuantizationLevel(uint64_t binary, int nbits, double minValue, double maxValue);
 
 #endif /* _PERSONAL_H  */
