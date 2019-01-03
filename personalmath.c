@@ -26,7 +26,7 @@
  */
 
 
-#include "personal.h"
+#include "personalmath.h"
 
 
 /* Matrix Memory Allocation */

@@ -25,9 +25,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _PERSONAL_H
-#define _PERSONAL_H
+#ifndef _PERSONALGEN_H
+#define _PERSONALGEN_H
 
+/* Libs */
+
+/* for printf, scanf, puts */
+#include <stdio.h>
+/* for NULL */
+#include <stdlib.h>
+/* for time, CLOCKS_PER_SEC */
+#include <time.h>
+/* Libs for Unix and Unix-like systems */
+#ifdef __unix__
+	/* for gettimeofday */
+    #include <sys/time.h>
+#endif
+
+/* Functions  */
 
 /* Receive a function as parameter */
 void functionParameter(float(*fun)(float,float)); 
@@ -41,5 +56,5 @@ void functionParameter(float(*fun)(float,float));
 	double getTimeInterval(clock_t begin, clock_t _end);
 #endif
 
-#endif /* _PERSONAL_H  */
+#endif /* _PERSONALGEN_H  */
 

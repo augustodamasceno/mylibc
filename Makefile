@@ -9,13 +9,19 @@ CFLAGS = -g -Wall -pedantic
 
 LIBS = -lm
 
-objects = personal.o examples.o
+objects = personalgen.o personalprint.o personalmath.o \
+examples.o
 
 all : $(objects)
 	cc -o examples $(objects) $(LIBS)
-examples.o: examples.c
+examples.o: examples.c personal.h
 	cc -c examples.c
-personal.o: personal.c personal.h 
-	cc -c personal.c $(CFLAGS)
+personalgen.o: personalgen.c personalgen.h 
+	cc -c personalgen.c $(CFLAGS)
+personalprint.o: personalprint.c personalprint.h 
+	cc -c personalprint.c $(CFLAGS)
+personalmath.o: personalmath.c personalmath.h 
+	cc -c personalmath.c $(CFLAGS)
 clean :
 	rm $(objects)
+

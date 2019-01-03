@@ -25,11 +25,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _PERSONAL_H
-#define _PERSONAL_H
+#ifndef _PERSONALMATH_H
+#define _PERSONALMATH_H
 
 /* Libs */
 
+/* for srand, rand, malloc, free */
+#include <stdlib.h>
 /* for pow */
 #include <math.h>
 /* for time, CLOCKS_PER_SEC */
@@ -57,4 +59,4 @@ double getQuantizationLevel(uint64_t binary, int nbits, double minValue, double 
 /* Vector Random Permutation */
 void permutation(int * vec, int size);
 
-#endif /* _PERSONAL_H  */
+#endif /* _PERSONALMATH_H  */

@@ -25,8 +25,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _PERSONAL_H
-#define _PERSONAL_H
+#ifndef _PERSONALPRINT_H
+#define _PERSONALPRINT_H
 
 /* Libs */
 
@@ -82,4 +82,4 @@ void setColor(int value);
 /* Print in binary format */
 void printBin(uint64_t value);
 	
-#endif /* _PERSONAL_H  */
+#endif /* _PERSONALPRINT_H  */

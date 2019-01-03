@@ -26,7 +26,7 @@
  */
 
 
-#include "personal.h"
+#include "personalgen.h"
 
 
 /* Receive a function as parameter */
