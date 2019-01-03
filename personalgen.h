@@ -28,13 +28,18 @@
 #ifndef _PERSONAL_H
 #define _PERSONAL_H
 
-/* All personalc Libs */
 
-/* General Utilities Lib */
-#include "personalgen.h"
-/* Mathematic Lib */
-#include "personalmath.h"
-/* Print Lib */
-#include "personalprint.h"
+/* Receive a function as parameter */
+void functionParameter(float(*fun)(float,float)); 
+
+/* Get time to measure performance */
+#ifdef __unix__
+	struct timeval getTime(void);
+	double getTimeInterval(struct timeval begin, struct timeval _end);
+#else
+	clock_t getTime(void);
+	double getTimeInterval(clock_t begin, clock_t _end);
+#endif
 
 #endif /* _PERSONAL_H  */
+

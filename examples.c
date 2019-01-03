@@ -172,6 +172,28 @@ int main(int argc, char ** argv)
 	}
 	printf("\n\n");
 
+	setColor(GREEN_BRIGHT);
+	printf(">> Example for function ");
+	printf("void permutation(int * vec, int size)\n");
+	setColor(GREEN);
+	printf("vec = 1 to 10, size = 10\n\n");
+	setColor(YELLOW);
+	int * veci = (int*) malloc(sizeof(int)*10);
+	printf("Original:\n");
+	for (i=0; i<10; i++)
+	{
+		veci[i] = i+1;
+		printf("%d  ",veci[i]);
+	}
+	permutation(veci,10);
+	printf("\nPermuted:\n");
+	for (i=0; i<10; i++)
+	{
+		printf("%d  ",veci[i]);
+	}
+	printf("\n\n");
+	free(veci);
+
 	setColor(COLOR_RESET);
 	return 0;
 } 

@@ -25,16 +25,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _PERSONAL_H
-#define _PERSONAL_H
 
-/* All personalc Libs */
+#include "personal.h"
 
-/* General Utilities Lib */
-#include "personalgen.h"
-/* Mathematic Lib */
-#include "personalmath.h"
-/* Print Lib */
-#include "personalprint.h"
 
-#endif /* _PERSONAL_H  */
+/* Set Color and Style with ANSI SCAPES */
+void setColor(int value)
+{
+	printf("\033[%dm",value);
+}
+
+/* Print in binary format */
+void printBin(uint64_t value)
+{
+	int i;
+	uint64_t getBit = 1;
+	getBit = getBit<<63;
+	printf("0b");
+	for (i=63; i>=0; i--)
+	{
+		if(getBit & value)
+		{
+			printf("1");
+		}
+		else
+		{
+			printf("0");
+		}
+		getBit = getBit>>1;
+	}
+}
+

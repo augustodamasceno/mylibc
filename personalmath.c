@@ -49,45 +49,6 @@ void matrixFree(double ** matrix, int r, int c)
 	free(matrix);
 }
 
-/* Receive a function as parameter */
-void functionParameter(float(*fun)(float,float))
-{
-	printf("functionParameter: %.4f\n",fun(2.0,3.0));
-}
-
-/* Get time to measure performance */
-#ifdef __unix__
-	struct timeval getTime(void)
-	{	
-		struct timeval t;
-		gettimeofday(&t, NULL);
-		return t;
-	} 
-
-	double getTimeInterval(struct timeval begin, struct timeval _end)
-	{
-		return ((_end.tv_sec+_end.tv_usec/1000000.0)) - \
-            (begin.tv_sec+begin.tv_usec/1000000.0);
-	}
-#else
-	clock_t getTime(void)
-	{
-		clock_t t = clock();
-		return t;
-	}
-
-	double getTimeInterval(clock_t begin, clock_t _end)
-	{
-		return  ((float)(begin-_end))/CLOCKS_PER_SEC;
-	}
-#endif
-
-/* Set Color and Style with ANSI SCAPES */
-void setColor(int value)
-{
-	printf("\033[%dm",value);
-}
-
 /* Normalize data in a vector */
 void normalize(double * vec, int size)
 {
@@ -117,27 +78,6 @@ void normalize(double * vec, int size)
 		vec[i] /= max;
 }
 
-/* Print in binary format */
-void printBin(uint64_t value)
-{
-	int i;
-	uint64_t getBit = 1;
-	getBit = getBit<<63;
-	printf("0b");
-	for (i=63; i>=0; i--)
-	{
-		if(getBit & value)
-		{
-			printf("1");
-		}
-		else
-		{
-			printf("0");
-		}
-		getBit = getBit>>1;
-	}
-}
-
 /* Get the continuos value from a quantized binary sample */
 double getQuantizationLevel(uint64_t binary, int nbits, double minValue, double maxValue)
 {
@@ -154,5 +94,21 @@ double getQuantizationLevel(uint64_t binary, int nbits, double minValue, double 
 	}
 
 	return sum*(maxValue-minValue)+minValue;
+}
+
+/* Vector Random Permutation */
+void permutation(int * vec, int size)
+{
+	int i;
+	int swap;
+	int r;
+	srand (time(NULL));	/* Initialize random seed */
+	for(i=0; i<size; i++)
+	{
+		r = rand() % size;
+		swap = vec[i];
+		vec[i] = vec[r];
+		vec[r] = swap;
+	}
 }
 
