@@ -4,9 +4,7 @@ My personal reference to C programming
 * General Utilities: personalgen  
 * Mathematic Lib: personalmath  
 * Print Lib: personalprint  
-
-## To microcontrollers programming see:  
-* https://github.com/augustomatheuss/mcu-examples  
+* Microcontrollers programming examples reference: mcu  
 
 ## Usage examples in file examples.c  
 * Compile (**Makefile Example!**)
