@@ -6,6 +6,7 @@
 * io-out.c  
 * ultrasonic-sensor.c  
 * usart.c  
+* usart-general.c
 * usart_rx_interruption.c  
 * spi-bus/  
 * usart-spi-usart/  

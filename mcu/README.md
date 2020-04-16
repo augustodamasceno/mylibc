@@ -11,6 +11,7 @@ Code examples for microcontrollers programming
   
 * IO  
 * USART
+* USART GENERAL (RX INTERRUPTION, SEND FORMATED MESSAGE AND STATE MACHINE)
 * USART RX INTERRUPTION  
 * ULTRASONIC SENSOR (Module HC - SR04)  
 * SPI  
