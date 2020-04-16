@@ -54,12 +54,11 @@ int main(){
 
 	/* Format and send the buffer : inital message to the user. */
 	sprintf((char*)buffer, "Enter with the frequency with 6 digits. Like: \"000440\" \n\n");
-  while(buffer[index] != '\0')
-  {
+	while(buffer[index] != '\0'){
 		while (!( UCSR0A & (1<<UDRE0) )) ;
-    UDR0 = buffer[index];
-    index++;
-  }
+		UDR0 = buffer[index];
+		index++;
+	}
 
 	/* Set Global Interrupt Enable. */
 	sei();
@@ -68,16 +67,16 @@ int main(){
 		/* Send message with frequency and period when the flag send is on. */
 		if(send){
     		index = 0;
-				/* Format and send the buffer */
-				dtostrf(1000000.0/((float)frequency), 16, 8, floatString);
-				sprintf((char*)buffer,
-					"Frequency: %dHz. Calculated Period: %sus. Real period: %dus\n",
-					frequency, floatString, (int)(2*cycle));
-				while(buffer[index] != '\0'){
-					while (!( UCSR0A & (1<<UDRE0) )) ;
-					UDR0 = buffer[index];
-					index++;
-				}
+			/* Format and send the buffer */
+			dtostrf(1000000.0/((float)frequency), 16, 8, floatString);
+			sprintf((char*)buffer,
+				"Frequency: %dHz. Calculated Period: %sus. Real period: %dus\n",
+				frequency, floatString, (int)(2*cycle));
+			while(buffer[index] != '\0'){
+				while (!( UCSR0A & (1<<UDRE0) )) ;
+				UDR0 = buffer[index];
+				index++;
+			}
 
 			send=0;
 			state=0;
