@@ -1,6 +1,8 @@
 # My tests.
-test*
+tests*
 examples
+testoutput*
+.DS_Store
 
 # Prerequisites
 *.d
