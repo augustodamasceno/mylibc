@@ -1,8 +1,8 @@
-# My tests.
-tests*
 examples
 testoutput*
 .DS_Store
+.vscode/
+tests/tests
 
 # Prerequisites
 *.d
