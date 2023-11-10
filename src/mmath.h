@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef _MYMATH_H
-#define _MYMATH_H
+#ifndef _MMATH_H
+#define _MMATH_H
 
 /* Integer Types */
 #include <stdint.h>
@@ -88,4 +88,4 @@ double getQuantizationLevel(uint64_t binary, uint64_t nbits, double minValue, do
 /* Vector Random Permutation */
 void permutation(int * vec, uint64_t size);
 
-#endif /* _MYMATH_H  */
+#endif /* _MMATH_H  */

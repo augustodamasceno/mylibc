@@ -12,6 +12,7 @@
 #include <check.h>
 
 #include "../src/mmath.h"
+#include "../src/mlist.h"
 
 
 START_TEST (testMatrix) {
@@ -45,14 +46,31 @@ START_TEST (testMatrix) {
 }
 END_TEST
 
+START_TEST (testList) {
+	List * list = list_init(sizeof(double));
+	ck_assert_ptr_nonnull(list);
+
+	ck_assert_int_eq(0, list->size);
+
+	double read = 100;
+	list_insert_front(list, (void *)&read);
+	ck_assert_int_eq(1, list->size);
+
+	char * list_str = list_str_double_format(list);
+	printf("%s", list_str);
+	free(list_str);
+
+	list_destruct(&list);
+	ck_assert_ptr_null(list);
+}
 
 int main()
 {
-    Suite *s = suite_create("Test suite for Math");
-
-    TCase *tcCore = tcase_create("Core");
-    tcase_add_test(tcCore, testMatrix);
-    suite_add_tcase(s, tcCore);
+    Suite *s = suite_create("Test Suite");
+    TCase *all = tcase_create("All Tests");
+    tcase_add_test(all, testMatrix);
+	tcase_add_test(all, testList);
+    suite_add_tcase(s, all);
     SRunner *runner = srunner_create(s);
     srunner_set_fork_status (runner, CK_NOFORK);
     srunner_run_all(runner, CK_VERBOSE);
