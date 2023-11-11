@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include <stdlib.h>
 /* sprintf, fprintf, stderr */
 #include <stdio.h>
 /* memcpy */

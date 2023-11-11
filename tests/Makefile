@@ -12,7 +12,7 @@ else
 endif
 TARGET = tests
 SRC_DIR = ../src
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c) main.c
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c) $(wildcard *.c)
 OBJ_FILES = $(patsubst %.c,%.o,$(SRC_FILES))
 
 all: $(TARGET)
