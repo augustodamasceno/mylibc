@@ -1,5 +1,4 @@
-# personalc  
-My personal C lib 
+## My C Library
 
 > Copyright (c) 2018-2023, Augusto Damasceno.  
 > All rights reserved.   
@@ -10,9 +9,12 @@ My personal C lib
 
 ## The Lib
 
-* General Utilities: mutils  
-* Mathematic Lib: mmath  
-* Print Lib: mprint  
+| Module | Description |  
+| -- | -- |  
+| mutils | General Utilities mutils |
+| mlist | Generic Linked List |
+| mmath | Mathematic Lib |  
+| mprint | Print Lib |  
 
 
 ## References:  
