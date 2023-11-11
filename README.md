@@ -13,9 +13,12 @@
 | -- | -- |  
 | mutils | General Utilities mutils |
 | mlist | Generic Linked List |
-| mmath | Mathematic Lib |  
+| mmath | Mathematic Lib |
 | mprint | Print Lib |  
 
+## Key Features
+* Generic Multidimensional Matrix in mmath  
+* The data structures are generic
 
 ## References:  
 * [Brian W. Kernighan,  Dennis Ritchie. C Programming Language](http://a.co/d/jbSe2YM)  

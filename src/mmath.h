@@ -26,7 +26,7 @@
 /**
  .. c:typedef:: Matrix
 
-    Multidimensional matrix with any sizes by dimension.
+    Generic Multidimensional Matrix.
 
     :c:member:: void *data
 
