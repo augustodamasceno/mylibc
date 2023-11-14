@@ -14,6 +14,7 @@
 #include "test_mmath.h"
 #include "test_mlist.h"
 #include "test_mqueue.h"
+#include "test_msma.h"
 
 
 void run_suite(Suite * suite, char * suite_name);
@@ -23,10 +24,12 @@ int main()
 	Suite * s_math = suite_mmath();
 	Suite * s_list = suite_mlist();
     Suite * s_queue = suite_mqueue();
+    Suite * s_sma = suite_msma();
 
 	run_suite(s_math, "mmath");
 	run_suite(s_list, "mlist");
     run_suite(s_queue, "mqueue");
+    run_suite(s_sma, "msma");
 
 	return 0;
 } 

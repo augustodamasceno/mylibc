@@ -4,11 +4,11 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
 	INCLUDE_DIRS = -I/usr/local/include/ 
 	LDFLAGS = -L/usr/local/lib/
-    LIBS = -lcheck
+    LIBS = -lcheck -lm
 else
 	INCLUDE_DIRS = -I/usr/include
     LDFLAGS = -L/usr/lib/x86_64-linux-gnu/
-    LIBS = -lcheck -lsubunit
+    LIBS = -lcheck -lsubunit -lm
 endif
 TARGET = tests
 SRC_DIR = ../src

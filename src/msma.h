@@ -11,6 +11,7 @@
 
 /* Integer Types */
 #include <stdint.h>
+#include "mqueue.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -18,13 +19,15 @@
 typedef struct {
     double sma;
     double sum;
+    Queue * values;
     unsigned char ready;
-    unsigned long period;
+    uint64_t period;
 
 } SimpleMovingAverage;
 
-SimpleMovingAverage sma_init(unsigned long period);
-
-//SimpleMovingAverage sma_add(SimpleMovingAverage * self, double value);
+SimpleMovingAverage * sma_init(unsigned long period);
+void sma_destruct(SimpleMovingAverage ** self);
+void sma_add(SimpleMovingAverage * self, double * value);
+double sma_get(SimpleMovingAverage * self);
 
 #endif /* _MSMA_H  */
