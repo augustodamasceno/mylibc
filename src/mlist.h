@@ -53,6 +53,8 @@ StatusList list_clear(List * self);
 StatusList list_get(List * self, void * write_location, u_int64_t index);
 StatusList list_front(List * self, void * write_location);
 StatusList list_back(List * self, void * write_location);
+char * _list_str(List * self, const char * format, size_t item_width, char * separator, size_t separator_width);
 char * list_str(List * self, const char * format, size_t item_width);
+
 
 #endif /* _MLIST_H  */

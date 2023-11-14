@@ -215,13 +215,13 @@ StatusList list_back(List * self, void * write_location){
     return StatusList;
 }
 
-char * list_str(List * self, const char * format, size_t item_width){
+char * _list_str(List * self, const char * format, size_t item_width, char * separator, size_t separator_width){
     char * str = NULL;
     if (self->size == 0){
         printf("[]\n");
     } else {
         /* [val1, val2, ..., valn] */
-        size_t str_size = 1 + 2 * self->size + item_width * self->size;
+        size_t str_size = 1 + separator_width * self->size + item_width * self->size;
         str = (char *) malloc(str_size);
         if (str){
             int offset = 0;
@@ -259,12 +259,19 @@ char * list_str(List * self, const char * format, size_t item_width){
                     offset += sprintf(str + offset, "?");
 
                 if (node_print->next)
-                    offset += sprintf(str + offset, ",");
+                    offset += sprintf(str + offset, "%s", separator);
                 node_print = node_print->next;
             }
             offset += sprintf(str + offset, "]\n");
         } else 
             fprintf(stderr, "The list could not be printed: memory allocation failed.");
     }
+    return str;
+}
+
+char * list_str(List * self, const char * format, size_t item_width){
+    char separator[] = ",";
+    size_t separator_width = 1;
+    char * str = _list_str(self, format, item_width, separator, separator_width);
     return str;
 }
