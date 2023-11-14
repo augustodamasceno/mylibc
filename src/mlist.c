@@ -40,6 +40,7 @@ List * list_init(size_t size_of_type){
 }
 
 void list_destruct(List ** self){
+    list_clear(*self);
 	free(*self);
 	*self = NULL;
 }
