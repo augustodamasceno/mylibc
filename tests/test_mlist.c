@@ -14,7 +14,7 @@
 #include "../src/mlist.h"
 
 
-START_TEST (testInitDestruct) {
+START_TEST (testListInitDestruct) {
 	List * list = list_init(sizeof(double));
 	ck_assert_ptr_nonnull(list);
 
@@ -27,7 +27,7 @@ START_TEST (testInitDestruct) {
 	ck_assert_ptr_null(list);
 }
 
-START_TEST (testInsertFront) {
+START_TEST (testListInsertFront) {
 	char * str = NULL;
 	double read = -1;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
@@ -65,7 +65,7 @@ START_TEST (testInsertFront) {
 	list_destruct(&list);
 }
 
-START_TEST (testInsertBack) {
+START_TEST (testListInsertBack) {
 	char * str = NULL;
 	double read = -1;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
@@ -103,7 +103,7 @@ START_TEST (testInsertBack) {
 	list_destruct(&list);
 }
 
-START_TEST (testInsertAt) {
+START_TEST (testListInsertAt) {
 	char * str = NULL;
 	int read = -1;
 	u_int64_t index = 0;
@@ -151,7 +151,7 @@ START_TEST (testInsertAt) {
 	list_destruct(&list);
 }
 
-START_TEST (testRemoveFront) {
+START_TEST (testListRemoveFront) {
 	int read = 1;
 	char * str = NULL;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
@@ -192,7 +192,7 @@ START_TEST (testRemoveFront) {
 	list_destruct(&list);
 }
 
-START_TEST (testRemoveBack) {
+START_TEST (testListRemoveBack) {
 	int read = 1;
 	char * str = NULL;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
@@ -233,7 +233,7 @@ START_TEST (testRemoveBack) {
 	list_destruct(&list);
 }
 
-START_TEST (testRemoveAt) {
+START_TEST (testListRemoveAt) {
 	int read = 0;
 	char * str = NULL;
 	uint64_t index = 0;
@@ -282,7 +282,7 @@ START_TEST (testRemoveAt) {
 	list_destruct(&list);
 }
 
-START_TEST (testClear) {
+START_TEST (testListClear) {
 	int read = 2;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
 
@@ -300,19 +300,96 @@ START_TEST (testClear) {
 	list_destruct(&list);
 }
 
+START_TEST (testListGet) {
+	int read = 0;
+	int write = 0;
+	uint64_t index = 0;
+	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
+
+	List * list = list_init(sizeof(int));
+	for (read=1; read<10; read++)
+		list_insert_back(list, (void *)&read);
+
+	/* Get at front */
+	index = 0;
+	status = list_get(list, (void *)&write, index);
+	ck_assert_int_eq(1, write);
+
+	/* Get at back */
+	index = 8;
+	status = list_get(list, (void *)&write, index);
+	ck_assert_int_eq(9, write);
+
+	/* Get at middle */
+	index = 6;
+	status = list_get(list, (void *)&write, index);
+	ck_assert_int_eq(7, write);
+
+	/* Get at invalid index */
+	index = 100;
+	write = 123;
+	status = list_get(list, (void *)&write, index);
+	ck_assert_int_eq(TRUE, status==STATUS_LIST_INVALID_INDEX);
+	ck_assert_int_eq(123, write);
+
+	list_destruct(&list);
+}
+
+START_TEST (testListFront) {
+	int read = 3;
+	int write = 8;
+	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
+
+	List * list = list_init(sizeof(int));
+	read = 1;
+	list_insert_front(list, (void *)&read);
+	read = 7;
+	list_insert_front(list, (void *)&read);
+	read = 100;
+	list_insert_front(list, (void *)&read);
+
+	status = list_front(list, (void *)&write);
+	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
+	ck_assert_int_eq(read, write);
+
+	list_destruct(&list);
+}
+
+START_TEST (testListBack) {
+	int read = 3;
+	int write = 8;
+	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
+
+	List * list = list_init(sizeof(int));
+	read = 1;
+	list_insert_back(list, (void *)&read);
+	read = 7;
+	list_insert_back(list, (void *)&read);
+	read = 100;
+	list_insert_back(list, (void *)&read);
+
+	status = list_back(list, (void *)&write);
+	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
+	ck_assert_int_eq(read, write);
+
+	list_destruct(&list);
+}
 
 Suite* suite_mlist(){
     Suite* suite = suite_create("List Suite");
     TCase* tc_list= tcase_create("List");
 
-    tcase_add_test(tc_list, testInitDestruct);
-	tcase_add_test(tc_list, testInsertFront);
-    tcase_add_test(tc_list, testInsertBack);
-	tcase_add_test(tc_list, testInsertAt);
-	tcase_add_test(tc_list, testRemoveFront);
-	tcase_add_test(tc_list, testRemoveBack);
-	tcase_add_test(tc_list, testRemoveAt);
-	tcase_add_test(tc_list, testClear);
+    tcase_add_test(tc_list, testListInitDestruct);
+	tcase_add_test(tc_list, testListInsertFront);
+    tcase_add_test(tc_list, testListInsertBack);
+	tcase_add_test(tc_list, testListInsertAt);
+	tcase_add_test(tc_list, testListRemoveFront);
+	tcase_add_test(tc_list, testListRemoveBack);
+	tcase_add_test(tc_list, testListRemoveAt);
+	tcase_add_test(tc_list, testListClear);
+	tcase_add_test(tc_list, testListGet);
+	tcase_add_test(tc_list, testListFront);
+	tcase_add_test(tc_list, testListBack);
 
 	suite_add_tcase(suite, tc_list); 
     return suite;

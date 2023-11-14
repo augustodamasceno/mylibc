@@ -123,9 +123,11 @@ StatusList list_clear(List * self){
 
 StatusList list_get(List * self, void * write_location, u_int64_t index){
      StatusList status = STATUS_LIST_SUCCESS;
-    if (self->size == 0){
+    if (self->size == 0)
         status = STATUS_LIST_EMPTY_LIST;
-    } else {
+    else if (index >= self->size)
+        status = STATUS_LIST_INVALID_INDEX;
+    else {
         Node * find = self->head;
         uint64_t counter;
         for (counter=0; counter<index; counter++)
