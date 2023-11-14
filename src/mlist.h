@@ -16,7 +16,6 @@
 
 #define TRUE 1
 #define FALSE 0
-#define DOUBLE_PRINT_SIZE 81
 
 
 struct Node;
@@ -32,29 +31,28 @@ typedef struct Node {
     struct Node * next;
 } Node;
 
-
-
 typedef enum {
-    SUCESS,
-    ERROR_MEM_ALOC,
-    INVALID_INDEX,
-    EMPTY_LIST
-} Status;
+    STATUS_LIST_SUCCESS,
+    STATUS_LIST_ERROR_MEM_ALOC,
+    STATUS_LIST_INVALID_INDEX,
+    STATUS_LIST_EMPTY_LIST
+} StatusList;
+
 
 Node * node_init(size_t size_of_type);
 void node_destruct(Node ** self);
 List * list_init(size_t size_of_type);
 void list_destruct(List ** self);
-Status list_insert_front(List * self, void * read_location);
-Status list_insert_back(List * self, void * read_location);
-Status list_insert_at(List * self, void * read_location, u_int64_t index);
-Status list_remove_front(List * self);
-Status list_remove_back(List * self);
-Status list_remove_at(List * self, u_int64_t index);
+StatusList list_insert_front(List * self, void * read_location);
+StatusList list_insert_back(List * self, void * read_location);
+StatusList list_insert_at(List * self, void * read_location, u_int64_t index);
+StatusList list_remove_front(List * self);
+StatusList list_remove_back(List * self);
+StatusList list_remove_at(List * self, u_int64_t index);
 void list_clear(List * self);
-Status list_get(List * self, void * write_location, u_int64_t index);
-Status list_front(List * self, void * write_location);
-Status list_back(List * self, void * write_location);
-char * list_str_double_format(List * self);
+StatusList list_get(List * self, void * write_location, u_int64_t index);
+StatusList list_front(List * self, void * write_location);
+StatusList list_back(List * self, void * write_location);
+char * list_str(List * self, const char * format, size_t item_width);
 
 #endif /* _MLIST_H  */

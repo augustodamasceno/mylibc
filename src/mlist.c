@@ -9,7 +9,7 @@
 #include <stdlib.h>
 /* sprintf, fprintf, stderr */
 #include <stdio.h>
-/* memcpy */
+/* memcpy, strchr */
 #include <string.h>
 
 #include "mlist.h"
@@ -44,9 +44,9 @@ void list_destruct(List ** self){
 	*self = NULL;
 }
 
-Status list_insert_front(List * self, void * read_location){
+StatusList list_insert_front(List * self, void * read_location){
     Node * node = node_init(self->size_of_type);
-    Status status = ERROR_MEM_ALOC;
+    StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
     if (node){
         node->next = self->head;
         self->head = node;
@@ -55,14 +55,15 @@ Status list_insert_front(List * self, void * read_location){
 
         memcpy(node->data, read_location, self->size_of_type);
         self->size++;
+        status = STATUS_LIST_SUCCESS;
     }
 
     return status;
 }
 
-Status list_insert_back(List * self, void * read_location){
+StatusList list_insert_back(List * self, void * read_location){
     Node * node = node_init(self->size_of_type);
-    Status status = ERROR_MEM_ALOC;
+    StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
     if (node){
         node->next = NULL;
         if (self->size == 0)
@@ -73,23 +74,23 @@ Status list_insert_back(List * self, void * read_location){
 
         memcpy(node->data, read_location, self->size_of_type);
         self->size++;
+        status = STATUS_LIST_SUCCESS;
     }
 
     return status;
 }
 
-Status list_insert_at(List * self, void * read_location, u_int64_t index){
-    Status status = SUCESS;
+StatusList list_insert_at(List * self, void * read_location, u_int64_t index){
+    StatusList status = STATUS_LIST_SUCCESS;
     if (index == 0)
         list_insert_front(self, read_location);
     else if (index == self->size)
         list_insert_back(self, read_location);
     else {
-        status = INVALID_INDEX;
         if (index < self->size){
             Node * node = node_init(self->size_of_type);
             if (node == NULL)
-                status = ERROR_MEM_ALOC;
+                status = STATUS_LIST_ERROR_MEM_ALOC;
             else{
                 Node * find_previous = self->head;
                 uint64_t counter;
@@ -102,7 +103,8 @@ Status list_insert_at(List * self, void * read_location, u_int64_t index){
                 memcpy(node->data, read_location, self->size_of_type);
                 self->size++;
             }
-        }
+        } else
+            status = STATUS_LIST_INVALID_INDEX;
     }
 
     return status;
@@ -113,10 +115,10 @@ void list_clear(List * self){
         list_remove_front(self);
 }
 
-Status list_get(List * self, void * write_location, u_int64_t index){
-     Status status = SUCESS;
+StatusList list_get(List * self, void * write_location, u_int64_t index){
+     StatusList status = STATUS_LIST_SUCCESS;
     if (self->size == 0){
-        status = EMPTY_LIST;
+        status = STATUS_LIST_EMPTY_LIST;
     } else {
         Node * find = self->head;
         uint64_t counter;
@@ -124,12 +126,13 @@ Status list_get(List * self, void * write_location, u_int64_t index){
             find = find->next;
         memcpy(write_location, find->data, self->size_of_type);
     }
+    return status;
 }
 
-Status list_remove_front(List * self){
-    Status status = SUCESS;
+StatusList list_remove_front(List * self){
+    StatusList status = STATUS_LIST_SUCCESS;
     if (self->size == 0){
-        status = EMPTY_LIST;
+        status = STATUS_LIST_EMPTY_LIST;
     } else if (self->size == 1){
         free(self->head);
         self->head = NULL;
@@ -144,12 +147,12 @@ Status list_remove_front(List * self){
     return status;
 }
 
-Status list_remove_back(List * self){
-    Status status = SUCESS;
+StatusList list_remove_back(List * self){
+    StatusList status = STATUS_LIST_SUCCESS;
     if (self->size == 0){
-        status = EMPTY_LIST;
+        status = STATUS_LIST_EMPTY_LIST;
     } else if (self->size == 1){
-        list_remove_front(self);
+        status = list_remove_front(self);
     } else {
         Node * previous_remove = self->head;
         while(previous_remove->next->next)
@@ -161,14 +164,14 @@ Status list_remove_back(List * self){
     return status;
 }
 
-Status list_remove_at(List * self, u_int64_t index){
-    Status status = INVALID_INDEX;
+StatusList list_remove_at(List * self, u_int64_t index){
+    StatusList status = STATUS_LIST_INVALID_INDEX;
     if (self->size == 0)
-        status = EMPTY_LIST;
+        status = STATUS_LIST_EMPTY_LIST;
     else if (index == 0)
-        list_remove_front(self);
+        status = list_remove_front(self);
     else if (index == self->size-1)
-        list_remove_back(self);
+        status = list_remove_back(self);
     else if (index < self->size) {
         Node * find_previous = self->head;
         uint64_t counter;
@@ -178,43 +181,73 @@ Status list_remove_at(List * self, u_int64_t index){
         free(remove);
         find_previous->next = find_previous->next->next;
         self->size--;
+        status = STATUS_LIST_SUCCESS;
     }
 
     return status;
 }
 
-Status list_front(List * self, void * write_location){
-    Status status = SUCESS;
+StatusList list_front(List * self, void * write_location){
+    StatusList StatusList = STATUS_LIST_SUCCESS;
     if (self->size == 0)
-        status = EMPTY_LIST;
+        StatusList = STATUS_LIST_EMPTY_LIST;
     else
         memcpy(write_location, self->head->data, self->size_of_type);
-    return status;
+    return StatusList;
 }
 
-Status list_back(List * self, void * write_location){
-    Status status = SUCESS;
+StatusList list_back(List * self, void * write_location){
+    StatusList StatusList = STATUS_LIST_SUCCESS;
     if (self->size == 0)
-        status = EMPTY_LIST;
+        StatusList = STATUS_LIST_EMPTY_LIST;
     else
         memcpy(write_location, self->tail->data, self->size_of_type);
-    return status;
+    return StatusList;
 }
 
-char * list_str_double_format(List * self){
+char * list_str(List * self, const char * format, size_t item_width){
     char * str = NULL;
     if (self->size == 0){
         printf("[]\n");
     } else {
         /* [val1, val2, ..., valn] */
-        size_t str_size = DOUBLE_PRINT_SIZE * self->size + 1 + 2 * self->size;
+        size_t str_size = 1 + 2 * self->size + item_width * self->size;
         str = (char *) malloc(str_size);
         if (str){
             int offset = 0;
             Node * node_print = self->head;
             offset += sprintf(str + offset, "[");
             while (node_print) {
-                offset += sprintf(str + offset, "%.16f", *((double *) (node_print->data)));
+                if ((strchr(format, 'd') != NULL) 
+                    || (strchr(format, 'i') != NULL) 
+                    || (strchr(format, 'l') != NULL)
+                    || (strchr(format, 'h') != NULL)
+                    || (strchr(format, 'j') != NULL)
+                    || (strchr(format, 'z') != NULL)
+                    || (strchr(format, 't') != NULL))
+                    offset += sprintf(str + offset, format, *((long int*)(node_print->data)));
+                else if ((strchr(format, 'u') != NULL) 
+                        || (strchr(format, 'o') != NULL) 
+                        || (strchr(format, 'x') != NULL)
+                        || (strchr(format, 'X') != NULL)) 
+                    offset += sprintf(str + offset, format, *((unsigned long int*)(node_print->data)));
+                else if ((strchr(format, 'f') != NULL) 
+                         || (strchr(format, 'F') != NULL) 
+                         || (strchr(format, 'e') != NULL)
+                         || (strchr(format, 'E') != NULL)
+                         || (strchr(format, 'g') != NULL)
+                         || (strchr(format, 'G') != NULL)
+                         || (strchr(format, 'a') != NULL)
+                         || (strchr(format, 'A') != NULL))
+                    offset += sprintf(str + offset, format, *((double*)(node_print->data)));
+                else if ((strchr(format, 's') != NULL)
+                        || (strchr(format, 'c') != NULL))
+                    offset += sprintf(str + offset, format, *((char*)(node_print->data)));
+                else if (strchr(format, 'p') != NULL)
+                    offset += sprintf(str + offset, format, node_print->data);
+                else
+                    offset += sprintf(str + offset, "?");
+
                 if (node_print->next)
                     offset += sprintf(str + offset, ",");
                 node_print = node_print->next;
