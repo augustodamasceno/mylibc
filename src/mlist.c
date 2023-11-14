@@ -110,9 +110,15 @@ StatusList list_insert_at(List * self, void * read_location, u_int64_t index){
     return status;
 }
 
-void list_clear(List * self){
-    while(self->size > 0)
-        list_remove_front(self);
+StatusList list_clear(List * self){
+    StatusList status = STATUS_LIST_SUCCESS;
+    if (self->size > 0){
+        while(self->size > 0)
+            list_remove_front(self);
+    } else
+        status = STATUS_LIST_EMPTY_LIST;
+
+    return status;
 }
 
 StatusList list_get(List * self, void * write_location, u_int64_t index){
@@ -160,6 +166,7 @@ StatusList list_remove_back(List * self){
         Node * remove = previous_remove->next;
         free(remove);
         previous_remove->next = NULL;
+        self->size--;
     }
     return status;
 }

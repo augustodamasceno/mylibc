@@ -49,7 +49,7 @@ StatusList list_insert_at(List * self, void * read_location, u_int64_t index);
 StatusList list_remove_front(List * self);
 StatusList list_remove_back(List * self);
 StatusList list_remove_at(List * self, u_int64_t index);
-void list_clear(List * self);
+StatusList list_clear(List * self);
 StatusList list_get(List * self, void * write_location, u_int64_t index);
 StatusList list_front(List * self, void * write_location);
 StatusList list_back(List * self, void * write_location);
