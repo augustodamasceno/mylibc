@@ -26,6 +26,9 @@
 * Generic Multidimensional Matrix in mmath  
 * The data structures are generic  
 
+## A complete reference for Basic and Advanced Arduino Programming  
+* https://github.com/augustodamasceno/notes-arduino
+
 ## References:  
 * [Brian W. Kernighan,  Dennis Ritchie. C Programming Language](http://a.co/d/jbSe2YM)  
 * http://www.cplusplus.com/reference/clibrary/  
