@@ -23,7 +23,7 @@ START_TEST (testQueue) {
 	ck_assert_ptr_nonnull(queue);
 	ck_assert_int_eq(queue_size(queue), 0);	
 
-	u_int64_t size = 0;
+	uint64_t size = 0;
 	while (read < 5){
 		status = queue_insert(queue, (void*)&read);
 		size++;

@@ -16,9 +16,6 @@
 
 #include "mlist.h"
 
-#define TRUE 1
-#define FALSE 0
-
 
 typedef struct {
     List * list;
@@ -26,7 +23,7 @@ typedef struct {
 
 Queue * queue_init(size_t size_of_type);
 void queue_destruct(Queue ** self);
-u_int64_t queue_size(Queue * self);
+uint64_t queue_size(Queue * self);
 StatusList queue_insert(Queue * self, void * read_location);
 StatusList queue_remove(Queue * self);
 StatusList queue_front(Queue * self, void * write_location);

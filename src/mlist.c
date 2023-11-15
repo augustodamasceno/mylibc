@@ -81,7 +81,7 @@ StatusList list_insert_back(List * self, void * read_location){
     return status;
 }
 
-StatusList list_insert_at(List * self, void * read_location, u_int64_t index){
+StatusList list_insert_at(List * self, void * read_location, uint64_t index){
     StatusList status = STATUS_LIST_SUCCESS;
     if (index == 0)
         list_insert_front(self, read_location);
@@ -122,7 +122,7 @@ StatusList list_clear(List * self){
     return status;
 }
 
-StatusList list_get(List * self, void * write_location, u_int64_t index){
+StatusList list_get(List * self, void * write_location, uint64_t index){
      StatusList status = STATUS_LIST_SUCCESS;
     if (self->size == 0)
         status = STATUS_LIST_EMPTY_LIST;
@@ -174,7 +174,7 @@ StatusList list_remove_back(List * self){
     return status;
 }
 
-StatusList list_remove_at(List * self, u_int64_t index){
+StatusList list_remove_at(List * self, uint64_t index){
     StatusList status = STATUS_LIST_INVALID_INDEX;
     if (self->size == 0)
         status = STATUS_LIST_EMPTY_LIST;

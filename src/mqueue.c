@@ -30,8 +30,8 @@ void queue_destruct(Queue ** self){
     *self = NULL;
 }
 
-u_int64_t queue_size(Queue * self){
-    u_int64_t size = self->list->size;
+uint64_t queue_size(Queue * self){
+    uint64_t size = self->list->size;
     return size;
 }
 

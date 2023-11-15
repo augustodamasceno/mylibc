@@ -13,7 +13,7 @@
 
 #include "msma.h"
 
-SimpleMovingAverage * sma_init(unsigned long period){
+SimpleMovingAverage * sma_init(uint64_t period){
     SimpleMovingAverage * sma = malloc(sizeof(SimpleMovingAverage));
     sma->values = queue_init(sizeof(double));
     sma->period = period;

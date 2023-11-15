@@ -13,8 +13,6 @@
 #include <stdint.h>
 #include "mqueue.h"
 
-#define TRUE 1
-#define FALSE 0
 
 typedef struct {
     double sma;
@@ -25,7 +23,7 @@ typedef struct {
 
 } SimpleMovingAverage;
 
-SimpleMovingAverage * sma_init(unsigned long period);
+SimpleMovingAverage * sma_init(uint64_t period);
 void sma_destruct(SimpleMovingAverage ** self);
 void sma_add(SimpleMovingAverage * self, double * value);
 double sma_get(SimpleMovingAverage * self);

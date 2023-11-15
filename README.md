@@ -11,14 +11,20 @@
 
 | Module | Description |  
 | -- | -- |  
-| mutils | General Utilities mutils |
-| mlist | Generic Linked List |
-| mmath | Mathematic Lib |
+| mlist | Generic Linked List |  
+| mmath | Mathematic Lib |  
+| mmcorr | Moving Correlation |  
 | mprint | Print Lib |  
+| mqueue | Generic Queue |  
+| msma | Simple Moving Average |  
+| mutils | General Utilities |
+
+## Documentation
+> Read the tests to see usage examples while there are no documentation pages.  
 
 ## Key Features
 * Generic Multidimensional Matrix in mmath  
-* The data structures are generic
+* The data structures are generic  
 
 ## References:  
 * [Brian W. Kernighan,  Dennis Ritchie. C Programming Language](http://a.co/d/jbSe2YM)  

@@ -106,7 +106,7 @@ START_TEST (testListInsertBack) {
 START_TEST (testListInsertAt) {
 	char * str = NULL;
 	int read = -1;
-	u_int64_t index = 0;
+	uint64_t index = 0;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
 
 	List * list = list_init(sizeof(int));
