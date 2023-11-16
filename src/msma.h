@@ -18,7 +18,6 @@ typedef struct {
     double sma;
     double sum;
     Queue * values;
-    unsigned char ready;
     uint64_t period;
 
 } SimpleMovingAverage;
