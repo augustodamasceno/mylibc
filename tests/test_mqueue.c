@@ -37,7 +37,7 @@ START_TEST (testQueue) {
 	ck_assert_double_eq(write, 1.0);	
 
 	str = queue_str(queue, "%.1f", 3);
-	ck_assert_str_eq(str, "[1.0 <- 2.0 <- 3.0 <- 4.0]\n");
+	ck_assert_str_eq(str, "[1.0 <- 2.0 <- 3.0 <- 4.0]");
 	free(str);
 
 	queue_destruct(&queue);
