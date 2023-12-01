@@ -30,6 +30,6 @@ run: $(TARGET)
 	./$(TARGET)
 
 check-mem: $(TARGET)
-	valgrind --leak-check=full --track-origins=yes $(TARGET)
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET)
 
 .PHONY: all clean run
