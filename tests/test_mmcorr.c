@@ -79,6 +79,7 @@ START_TEST (testAddGet) {
 	get_val = mcorr_get(mcorr, list);
 	ck_assert_double_eq(-1, get_val);
 
+	list_destruct(&list);
 	mcorr_destruct(&mcorr);
 }
 
