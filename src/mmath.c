@@ -62,13 +62,13 @@ size_t matrix_offset(Matrix * self, size_t * indices){
 	return offset;
 }
 
-void matrix_get(Matrix * self, size_t * indices, void * write_location, size_t size_of_type){
+void matrix_get(Matrix * self, size_t * indices, void * write_location){
 	size_t offset = matrix_offset(self, indices);
     char * data_location = (char*) self->data + offset * self->size_of_type;
     memcpy(write_location, data_location, self->size_of_type);
 }
 
-void matrix_set(Matrix * self, size_t * indices, void * read_location, size_t size_of_type){
+void matrix_set(Matrix * self, size_t * indices, void * read_location){
 	size_t offset = matrix_offset(self, indices);
     char * data_location = (char*) self->data + offset * self->size_of_type;
     memcpy(data_location, read_location, self->size_of_type);
@@ -77,7 +77,7 @@ void matrix_set(Matrix * self, size_t * indices, void * read_location, size_t si
 /* Normalize data in a vector */
 void normalize(double * vec, uint64_t size)
 {
-	int i;
+	uint64_t i;
 	double offset = 0;
 
 	/* Find the minor value */
@@ -124,7 +124,7 @@ double getQuantizationLevel(uint64_t binary, uint64_t nbits, double minValue, do
 /* Vector Random Permutation */
 void permutation(int * vec, uint64_t size)
 {
-	int i;
+	uint64_t i;
 	int swap;
 	int r;
 	srand (time(NULL));	/* Initialize random seed */

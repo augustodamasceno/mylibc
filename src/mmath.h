@@ -75,9 +75,9 @@ void matrix_destruct(Matrix ** self);
 
 size_t matrix_offset(Matrix * self, size_t * indices);
 
-void matrix_get(Matrix * self, size_t * indices, void * write_location, size_t size_of_type);
+void matrix_get(Matrix * self, size_t * indices, void * write_location);
 
-void matrix_set(Matrix * self, size_t * indices, void * read_location, size_t size_of_type);
+void matrix_set(Matrix * self, size_t * indices, void * read_location);
 
 /* Normalize data in a vector */
 void normalize(double * vec, uint64_t size);

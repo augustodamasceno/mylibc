@@ -30,8 +30,8 @@ START_TEST (testMatrix) {
 			indices[1] = col;
 			write += 1.0;
 			read = 0;
-			matrix_set(matrix, indices, &write, sizeof(double));
-			matrix_get(matrix, indices, &read, sizeof(double));
+			matrix_set(matrix, indices, &write);
+			matrix_get(matrix, indices, &read);
 			ck_assert_double_eq(write, read);
 		}
 	}
