@@ -18,7 +18,7 @@
 #include "test_mmcorr.h"
 
 
-void run_suite(Suite * suite, char * suite_name);
+void run_suite(Suite * suite, const char * suite_name);
 
 int main()
 {
@@ -28,16 +28,21 @@ int main()
     Suite * s_sma = suite_msma();
     Suite * s_mcorr = suite_mmcorr();
 
+    printf("\n");
 	run_suite(s_math, "mmath");
+    printf("\n");
 	run_suite(s_list, "mlist");
+    printf("\n");
     run_suite(s_queue, "mqueue");
+    printf("\n");
     run_suite(s_sma, "msma");
+    printf("\n");
     run_suite(s_mcorr, "mcorr");
 
 	return 0;
 } 
 
-void run_suite(Suite * suite, char * suite_name){
+void run_suite(Suite * suite, const char * suite_name){
     SRunner *runner = srunner_create(suite);
     srunner_set_fork_status (runner, CK_NOFORK);
     srunner_run_all(runner, CK_VERBOSE);
@@ -45,5 +50,8 @@ void run_suite(Suite * suite, char * suite_name){
     int num_failures = srunner_ntests_failed(runner);
     int num_success = num_tests - num_failures;
     srunner_free(runner);
-    printf("Suite for %s: Sucess: %d Failures: %d\n", suite_name, num_success, num_failures);
+    printf("Suite for %s\n\tSucess: %d\n\tFailures: %d\n"
+           , suite_name
+           , num_success
+           , num_failures);
 }
