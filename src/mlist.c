@@ -15,8 +15,9 @@
 #include "mlist.h"
 
 Node * node_init(size_t size_of_type){
-    Node * node = malloc(size_of_type);
+    Node * node = (Node*) malloc(sizeof(Node));
     node->data = malloc(size_of_type);
+    node->next = NULL;
     if (node->data == NULL){
         free(node);
         node = NULL;
@@ -143,14 +144,14 @@ StatusList list_remove_front(List * self){
     if (self->size == 0){
         status = STATUS_LIST_EMPTY_LIST;
     } else if (self->size == 1){
-        free(self->head);
+        node_destruct(&(self->head));
         self->head = NULL;
         self->tail = NULL;
         self->size = 0;
     } else {
         Node * remove =  self->head;
         self->head = remove->next;
-        free(remove);
+        node_destruct(&remove);
         self->size--;
     }
     return status;
@@ -167,7 +168,7 @@ StatusList list_remove_back(List * self){
         while(previous_remove->next->next)
             previous_remove = previous_remove->next; 
         Node * remove = previous_remove->next;
-        free(remove);
+        node_destruct(&remove);
         previous_remove->next = NULL;
         self->size--;
     }
@@ -188,8 +189,8 @@ StatusList list_remove_at(List * self, uint64_t index){
         for (counter=1; counter<index; counter++)
             find_previous = find_previous->next;
         Node * remove = find_previous->next;
-        free(remove);
         find_previous->next = find_previous->next->next;
+        node_destruct(&remove);
         self->size--;
         status = STATUS_LIST_SUCCESS;
     }
@@ -215,40 +216,75 @@ StatusList list_back(List * self, void * write_location){
     return StatusList;
 }
 
+int format_specifiers_unsigned(const char * format){
+    int confirmed = 0;
+    if ((strchr(format, 'u') != NULL) 
+        || (strchr(format, 'o') != NULL) 
+        || (strchr(format, 'x') != NULL)
+        || (strchr(format, 'X') != NULL)) 
+        confirmed = 1;
+    return confirmed;
+}
+
+int format_specifiers_int(const char * format){
+    int confirmed = 0;
+    if ((strchr(format, 'd') != NULL) 
+        || (strchr(format, 'i') != NULL) 
+        || (strchr(format, 'h') != NULL)
+        || (strchr(format, 'j') != NULL)
+        || (strchr(format, 'z') != NULL)
+        || (strchr(format, 't') != NULL))
+        confirmed = 1;
+    return confirmed;
+}
+
+int format_specifiers_long(const char * format){
+    int confirmed = 0;
+    if ((strchr(format, 'l') != NULL))
+        confirmed = 1;
+    return confirmed;
+}
+
+int format_specifiers_double(const char * format){
+    int confirmed = 0;
+    if ((strchr(format, 'f') != NULL) 
+        || (strchr(format, 'F') != NULL) 
+        || (strchr(format, 'e') != NULL)
+        || (strchr(format, 'E') != NULL)
+        || (strchr(format, 'g') != NULL)
+        || (strchr(format, 'G') != NULL)
+        || (strchr(format, 'a') != NULL)
+        || (strchr(format, 'A') != NULL))
+        confirmed = 1;
+    return confirmed;
+}
+
 char * _list_str(List * self, const char * format, size_t item_width, char * separator, size_t separator_width){
     char * str = NULL;
     if (self->size == 0){
         printf("[]\n");
     } else {
         /* [val1, val2, ..., valn] */
-        size_t str_size = 1 + separator_width * self->size + item_width * self->size;
+        size_t str_size = 3 + separator_width * self->size + item_width * self->size;
         str = (char *) malloc(str_size);
         if (str){
             int offset = 0;
             Node * node_print = self->head;
             offset += sprintf(str + offset, "[");
             while (node_print) {
-                if ((strchr(format, 'd') != NULL) 
-                    || (strchr(format, 'i') != NULL) 
-                    || (strchr(format, 'l') != NULL)
-                    || (strchr(format, 'h') != NULL)
-                    || (strchr(format, 'j') != NULL)
-                    || (strchr(format, 'z') != NULL)
-                    || (strchr(format, 't') != NULL))
-                    offset += sprintf(str + offset, format, *((long int*)(node_print->data)));
-                else if ((strchr(format, 'u') != NULL) 
-                        || (strchr(format, 'o') != NULL) 
-                        || (strchr(format, 'x') != NULL)
-                        || (strchr(format, 'X') != NULL)) 
-                    offset += sprintf(str + offset, format, *((unsigned long int*)(node_print->data)));
-                else if ((strchr(format, 'f') != NULL) 
-                         || (strchr(format, 'F') != NULL) 
-                         || (strchr(format, 'e') != NULL)
-                         || (strchr(format, 'E') != NULL)
-                         || (strchr(format, 'g') != NULL)
-                         || (strchr(format, 'G') != NULL)
-                         || (strchr(format, 'a') != NULL)
-                         || (strchr(format, 'A') != NULL))
+                if (format_specifiers_int(format)){
+                    if (format_specifiers_unsigned(format))
+                        offset += sprintf(str + offset, format, *((unsigned int*)(node_print->data)));
+                    else
+                        offset += sprintf(str + offset, format, *((int*)(node_print->data)));
+                } 
+                else if (format_specifiers_long(format)){
+                    if (format_specifiers_unsigned(format))
+                        offset += sprintf(str + offset, format, *((unsigned long int*)(node_print->data)));
+                    else
+                        offset += sprintf(str + offset, format, *((long int*)(node_print->data)));
+                } 
+                else if (format_specifiers_double(format))
                     offset += sprintf(str + offset, format, *((double*)(node_print->data)));
                 else if ((strchr(format, 's') != NULL)
                         || (strchr(format, 'c') != NULL))
@@ -262,7 +298,7 @@ char * _list_str(List * self, const char * format, size_t item_width, char * sep
                     offset += sprintf(str + offset, "%s", separator);
                 node_print = node_print->next;
             }
-            offset += sprintf(str + offset, "]\n");
+            offset += sprintf(str + offset, "]");
         } else 
             fprintf(stderr, "The list could not be printed: memory allocation failed.");
     }

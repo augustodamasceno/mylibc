@@ -41,7 +41,7 @@ START_TEST (testListInsertFront) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
 	str = list_str(list, "%.1f", 5);
-	ck_assert_str_eq(str, "[100.0]\n");
+	ck_assert_str_eq(str, "[100.0]");
 	free(str);
 
 	read = 0.123;
@@ -50,7 +50,7 @@ START_TEST (testListInsertFront) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
 	str = list_str(list, "%.3f", 5);
-	ck_assert_str_eq(str, "[0.123,100.000]\n");
+	ck_assert_str_eq(str, "[0.123,100.000]");
 	free(str);
 
 	read = -456;
@@ -58,8 +58,8 @@ START_TEST (testListInsertFront) {
 	ck_assert_int_eq(3, list->size);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
-	str = list_str(list, "%.3f", 5);
-	ck_assert_str_eq(str, "[-456.000,0.123,100.000]\n");
+	str = list_str(list, "%.3f", 8);
+	ck_assert_str_eq(str, "[-456.000,0.123,100.000]");
 	free(str);
 
 	list_destruct(&list);
@@ -79,7 +79,7 @@ START_TEST (testListInsertBack) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
 	str = list_str(list, "%.1f", 5);
-	ck_assert_str_eq(str, "[100.0]\n");
+	ck_assert_str_eq(str, "[100.0]");
 	free(str);
 
 	read = 0.123;
@@ -88,7 +88,7 @@ START_TEST (testListInsertBack) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
 	str = list_str(list, "%.3f", 5);
-	ck_assert_str_eq(str, "[100.000,0.123]\n");
+	ck_assert_str_eq(str, "[100.000,0.123]");
 	free(str);
 
 	read = -456;
@@ -96,8 +96,8 @@ START_TEST (testListInsertBack) {
 	ck_assert_int_eq(3, list->size);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 
-	str = list_str(list, "%.3f", 5);
-	ck_assert_str_eq(str, "[100.000,0.123,-456.000]\n");
+	str = list_str(list, "%.3f", 8);
+	ck_assert_str_eq(str, "[100.000,0.123,-456.000]");
 	free(str);
 
 	list_destruct(&list);
@@ -126,7 +126,7 @@ START_TEST (testListInsertAt) {
 	ck_assert_int_eq(1, list->size);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[1]\n");
+	ck_assert_str_eq(str, "[1]");
 	free(str);
 
 	/* Index equal to the size of the list. */
@@ -136,7 +136,7 @@ START_TEST (testListInsertAt) {
 	ck_assert_int_eq(2, list->size);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[1,2]\n");
+	ck_assert_str_eq(str, "[1,2]");
 	free(str);
 
 	/* Index in the middle of the list. */
@@ -145,7 +145,7 @@ START_TEST (testListInsertAt) {
 	ck_assert_int_eq(3, list->size);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[1,3,2]\n");
+	ck_assert_str_eq(str, "[1,3,2]");
 	free(str);
 
 	list_destruct(&list);
@@ -168,7 +168,7 @@ START_TEST (testListRemoveFront) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	ck_assert_int_eq(2, list->size);
 	str = list_str(list, "%d", 5);
-	ck_assert_str_eq(str, "[2,3]\n");
+	ck_assert_str_eq(str, "[2,3]");
 	free(str);
 
 	/* Remove front list with 1 item */
@@ -176,7 +176,7 @@ START_TEST (testListRemoveFront) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	ck_assert_int_eq(1, list->size);
 	str = list_str(list, "%d", 5);
-	ck_assert_str_eq(str, "[3]\n");
+	ck_assert_str_eq(str, "[3]");
 	free(str);
 	
 	/* Remove front list with 1 item */
@@ -209,7 +209,7 @@ START_TEST (testListRemoveBack) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	ck_assert_int_eq(2, list->size);
 	str = list_str(list, "%d", 5);
-	ck_assert_str_eq(str, "[1,2]\n");
+	ck_assert_str_eq(str, "[1,2]");
 	free(str);
 
 	/* Remove front list with 1 item */
@@ -217,7 +217,7 @@ START_TEST (testListRemoveBack) {
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	ck_assert_int_eq(1, list->size);
 	str = list_str(list, "%d", 5);
-	ck_assert_str_eq(str, "[1]\n");
+	ck_assert_str_eq(str, "[1]");
 	free(str);
 	
 	/* Remove front list with 1 item */
@@ -248,7 +248,7 @@ START_TEST (testListRemoveAt) {
 	status = list_remove_at(list, index);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[2,3,4,5,6,7,8,9]\n");
+	ck_assert_str_eq(str, "[2,3,4,5,6,7,8,9]");
 	ck_assert_int_eq(8, list->size);
 	free(str);
 
@@ -257,7 +257,7 @@ START_TEST (testListRemoveAt) {
 	status = list_remove_at(list, index);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[2,3,4,5,6,7,8]\n");
+	ck_assert_str_eq(str, "[2,3,4,5,6,7,8]");
 	ck_assert_int_eq(7, list->size);
 	free(str);
 
@@ -266,7 +266,8 @@ START_TEST (testListRemoveAt) {
 	status = list_remove_at(list, index);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[2,3,4,6,7,8]\n");
+	printf("%s", str);
+	ck_assert_str_eq(str, "[2,3,4,6,7,8]");
 	ck_assert_int_eq(6, list->size);
 	free(str);
 
@@ -275,7 +276,7 @@ START_TEST (testListRemoveAt) {
 	status = list_remove_at(list, index);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_INVALID_INDEX);
 	str = list_str(list, "%d", 1);
-	ck_assert_str_eq(str, "[2,3,4,6,7,8]\n");
+	ck_assert_str_eq(str, "[2,3,4,6,7,8]");
 	ck_assert_int_eq(6, list->size);
 	free(str);
 
@@ -284,14 +285,12 @@ START_TEST (testListRemoveAt) {
 
 START_TEST (testListClear) {
 	int read = 2;
+	uint8_t index = 0;
 	StatusList status = STATUS_LIST_ERROR_MEM_ALOC;
 
 	List * list = list_init(sizeof(int));
-	list_insert_back(list, (void *)&read);
-	list_insert_back(list, (void *)&read);
-	list_insert_back(list, (void *)&read);
-	list_insert_back(list, (void *)&read);
-	list_insert_back(list, (void *)&read);
+	for (index=0; index<5; index++)
+		list_insert_back(list, (void *)&read);
 
 	status = list_clear(list);
 	ck_assert_int_eq(TRUE, status==STATUS_LIST_SUCCESS);
