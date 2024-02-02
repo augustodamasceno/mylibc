@@ -16,6 +16,7 @@
 #include "test_mqueue.h"
 #include "test_msma.h"
 #include "test_mmcorr.h"
+#include "test_mlistcont.h"
 
 
 void run_suite(Suite * suite, const char * suite_name);
@@ -27,6 +28,7 @@ int main()
     Suite * s_queue = suite_mqueue();
     Suite * s_sma = suite_msma();
     Suite * s_mcorr = suite_mmcorr();
+	Suite * s_list_cont = suite_mlist_cont();
 
     printf("\n");
 	run_suite(s_math, "mmath");
@@ -38,6 +40,8 @@ int main()
     run_suite(s_sma, "msma");
     printf("\n");
     run_suite(s_mcorr, "mcorr");
+	printf("\n");
+	run_suite(s_list_cont, "mlist_cont");
 
 	return 0;
 } 

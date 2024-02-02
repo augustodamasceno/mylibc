@@ -57,4 +57,10 @@ void setColor(int value);
 /* Print in binary format */
 void printBin(uint64_t value);
 	
+/* Format Specifiers for Generic Data Print */
+int format_specifiers_unsigned(const char * format);
+int format_specifiers_int(const char * format);
+int format_specifiers_long(const char * format);
+int format_specifiers_double(const char * format);
+
 #endif /* _MPRINT_H  */

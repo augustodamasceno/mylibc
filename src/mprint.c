@@ -6,16 +6,16 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include <string.h>
+
 #include "mprint.h"
 
 
-/* Set Color and Style with ANSI SCAPES */
 void setColor(int value)
 {
 	printf("\033[%dm",value);
 }
 
-/* Print in binary format */
 void printBin(uint64_t value)
 {
 	int i;
@@ -35,3 +35,47 @@ void printBin(uint64_t value)
 		getBit = getBit>>1;
 	}
 }
+
+int format_specifiers_unsigned(const char * format){
+	int confirmed = 0;
+	if ((strchr(format, 'u') != NULL) 
+			|| (strchr(format, 'o') != NULL) 
+			|| (strchr(format, 'x') != NULL)
+			|| (strchr(format, 'X') != NULL)) 
+		confirmed = 1;
+	return confirmed;
+}
+
+int format_specifiers_int(const char * format){
+	int confirmed = 0;
+	if ((strchr(format, 'd') != NULL) 
+			|| (strchr(format, 'i') != NULL) 
+			|| (strchr(format, 'h') != NULL)
+			|| (strchr(format, 'j') != NULL)
+			|| (strchr(format, 'z') != NULL)
+			|| (strchr(format, 't') != NULL))
+		confirmed = 1;
+	return confirmed;
+}
+
+int format_specifiers_long(const char * format){
+	int confirmed = 0;
+	if ((strchr(format, 'l') != NULL))
+		confirmed = 1;
+	return confirmed;
+}
+
+int format_specifiers_double(const char * format){
+	int confirmed = 0;
+	if ((strchr(format, 'f') != NULL) 
+			|| (strchr(format, 'F') != NULL) 
+			|| (strchr(format, 'e') != NULL)
+			|| (strchr(format, 'E') != NULL)
+			|| (strchr(format, 'g') != NULL)
+			|| (strchr(format, 'G') != NULL)
+			|| (strchr(format, 'a') != NULL)
+			|| (strchr(format, 'A') != NULL))
+		confirmed = 1;
+	return confirmed;
+}
+

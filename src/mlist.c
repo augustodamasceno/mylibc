@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "mlist.h"
+#include "mprint.h"
 
 Node * node_init(size_t size_of_type){
     Node * node = (Node*) malloc(sizeof(Node));
@@ -216,53 +217,11 @@ StatusList list_back(List * self, void * write_location){
     return StatusList;
 }
 
-int format_specifiers_unsigned(const char * format){
-    int confirmed = 0;
-    if ((strchr(format, 'u') != NULL) 
-        || (strchr(format, 'o') != NULL) 
-        || (strchr(format, 'x') != NULL)
-        || (strchr(format, 'X') != NULL)) 
-        confirmed = 1;
-    return confirmed;
-}
-
-int format_specifiers_int(const char * format){
-    int confirmed = 0;
-    if ((strchr(format, 'd') != NULL) 
-        || (strchr(format, 'i') != NULL) 
-        || (strchr(format, 'h') != NULL)
-        || (strchr(format, 'j') != NULL)
-        || (strchr(format, 'z') != NULL)
-        || (strchr(format, 't') != NULL))
-        confirmed = 1;
-    return confirmed;
-}
-
-int format_specifiers_long(const char * format){
-    int confirmed = 0;
-    if ((strchr(format, 'l') != NULL))
-        confirmed = 1;
-    return confirmed;
-}
-
-int format_specifiers_double(const char * format){
-    int confirmed = 0;
-    if ((strchr(format, 'f') != NULL) 
-        || (strchr(format, 'F') != NULL) 
-        || (strchr(format, 'e') != NULL)
-        || (strchr(format, 'E') != NULL)
-        || (strchr(format, 'g') != NULL)
-        || (strchr(format, 'G') != NULL)
-        || (strchr(format, 'a') != NULL)
-        || (strchr(format, 'A') != NULL))
-        confirmed = 1;
-    return confirmed;
-}
-
 char * _list_str(List * self, const char * format, size_t item_width, char * separator, size_t separator_width){
     char * str = NULL;
     if (self->size == 0){
-        printf("[]\n");
+		str = (char *) malloc(3);
+		sprintf(str, "[]");
     } else {
         /* [val1, val2, ..., valn] */
         size_t str_size = 3 + separator_width * self->size + item_width * self->size;

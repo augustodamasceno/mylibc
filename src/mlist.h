@@ -53,10 +53,6 @@ StatusList list_clear(List * self);
 StatusList list_get(List * self, void * write_location, uint64_t index);
 StatusList list_front(List * self, void * write_location);
 StatusList list_back(List * self, void * write_location);
-int format_specifiers_unsigned(const char * format);
-int format_specifiers_int(const char * format);
-int format_specifiers_long(const char * format);
-int format_specifiers_double(const char * format);
 char * _list_str(List * self, const char * format, size_t item_width, char * separator, size_t separator_width);
 char * list_str(List * self, const char * format, size_t item_width);
 
