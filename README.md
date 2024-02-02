@@ -1,6 +1,6 @@
 ## My C Library
 
-> Copyright (c) 2018-2023, Augusto Damasceno.  
+> Copyright (c) 2018-2024, Augusto Damasceno.  
 > All rights reserved.   
 > SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,6 +12,7 @@
 | Module | Description |  
 | -- | -- |  
 | mlist | Generic Linked List |  
+| mlistcont | Contiguous Cache-Friendly List |  
 | mmath | Mathematic Lib |  
 | mmcorr | Moving Correlation |  
 | mprint | Print Lib |  
