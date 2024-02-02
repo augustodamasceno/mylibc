@@ -24,8 +24,9 @@
 > Read the tests to see usage examples while there are no documentation pages.  
 
 ## Key Features
-* Generic Multidimensional Matrix in mmath  
 * The data structures are generic  
+* Generic multidimensional matrix in mmath  
+* Contiguous cache-friendly list
 
 ## A complete reference for Basic and Advanced Arduino Programming  
 * https://github.com/augustodamasceno/notes-arduino
