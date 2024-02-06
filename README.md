@@ -18,6 +18,7 @@
 | mprint | Print Lib |  
 | mqueue | Generic Queue |  
 | msma | Simple Moving Average |  
+| msqueue | Generic Static Queue |    
 | mutils | General Utilities |
 
 ## Documentation
