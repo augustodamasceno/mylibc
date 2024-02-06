@@ -1,6 +1,6 @@
 /* Mylibc Simple Moving Average
  *
- * Copyright (c) 2018-2023, Augusto Damasceno.
+ * Copyright (c) 2018-2024, Augusto Damasceno.
  * All rights reserved.
  * 
  * SPDX-License-Identifier: BSD-2-Clause
@@ -13,9 +13,11 @@
 
 #include "msma.h"
 
+
 SimpleMovingAverage * sma_init(uint64_t period){
     SimpleMovingAverage * sma = malloc(sizeof(SimpleMovingAverage));
-    sma->values = queue_init(sizeof(double));
+	uint64_t max_size = period;
+    sma->values = squeue_init(sizeof(double), max_size);
     sma->period = period;
     sma->sma = 0;
     sma->sum = 0;
@@ -23,7 +25,7 @@ SimpleMovingAverage * sma_init(uint64_t period){
 }
 
 void sma_destruct(SimpleMovingAverage ** self){
-    queue_destruct(&((*self)->values));
+    squeue_destruct(&((*self)->values));
     free(*self);
     *self = NULL;
 }
@@ -31,20 +33,21 @@ void sma_destruct(SimpleMovingAverage ** self){
 void sma_add(SimpleMovingAverage * self, double * value){
     double write = NAN;
     if (isnan(*value) == 0){
-        if (queue_size(self->values) == self->period){
-            queue_front(self->values, (void*)&write);
+        if (self->values->size == self->period){
+            squeue_front(self->values, (void*)&write);
             self->sum += -1 * write + (*value);
-            queue_remove(self->values);
+            squeue_remove(self->values);
         } else
             self->sum += *value;
-        queue_insert(self->values, (void*)value);
+        squeue_insert(self->values, (void*)value);
         self->sma = self->sum / (double) self->period;
     }
 }
 
 double sma_get(SimpleMovingAverage * self){
     double value = NAN;
-    if (queue_size(self->values) == self->period)
+    if (self->values->size == self->period)
         value = self->sma;
     return value;
 }
+
