@@ -49,6 +49,7 @@ void squeue_insert(StaticQueue * self, void * read_location){
 		} else if (self->size == self->max_size){
 			self->front = (self->front + 1) % self->max_size;
 			self->back = (self->back + 1) % self->max_size;
+			self->size--;
 		} else {
 			self->back = (self->back + 1) % self->max_size;
 		}

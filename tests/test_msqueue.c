@@ -18,7 +18,8 @@ START_TEST (testSQueue) {
 	double read = 1;
 	double write = 0;
 	char * str = NULL;
-	StaticQueue * queue = squeue_init(sizeof(double), 5);
+	uint64_t max_size = 4;
+	StaticQueue * queue = squeue_init(sizeof(double), max_size);
 	ck_assert_ptr_nonnull(queue);
 	ck_assert_int_eq(queue->size, 0);	
 
@@ -34,6 +35,16 @@ START_TEST (testSQueue) {
 
 	str = squeue_str(queue, "%.1f", 3);
 	ck_assert_str_eq(str, "[1.0 <- 2.0 <- 3.0 <- 4.0]");
+	free(str);
+
+	/* Add until 10 and check if only the last 'max_values' are kept in the queue. */
+	while(read < 11){
+		squeue_insert(queue, (void*)&read);
+		read += 1.0;
+	}
+
+	str = squeue_str(queue, "%.2f", 5);
+	ck_assert_str_eq(str, "[7.00 <- 8.00 <- 9.00 <- 10.00]");
 	free(str);
 
 	squeue_destruct(&queue);
