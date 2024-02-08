@@ -57,7 +57,6 @@ START_TEST (testTableAsDouble) {
 	char separator[2] = ",";
 	uint64_t skip_rows = 98;
 	uint64_t index_row = 0;
-	uint64_t index_column = 0;
 	double ** matrix = NULL;
 	uint64_t num_rows = 0;
 	uint64_t num_columns = 0;
