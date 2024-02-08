@@ -164,18 +164,20 @@ char ** string_split(const char * string,
 		}
 		index_substring = 0;
 		index = 0;
-		while(index<=size_string){
+		while(index<size_string){
 			jump = 1;
 			cut = string_cut(string, index, index+size_separator-1);
 			if (cut != NULL){
 				if (strcmp(cut, separator) == 0){
 					jump = size_separator; 
-					strings[num_substring][index_substring+1] = '\0';
+					strings[num_substring][index_substring] = '\0';
 					num_substring++;
 					index_substring = -1;
-				} else
+				} else {
 					strings[num_substring][index_substring] = string[index];
-
+					if (index==size_string-1)
+						strings[num_substring][index_substring+1] = '\0';
+				}
 				free(cut);
 			}
 			index += jump;
