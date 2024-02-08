@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "mcsv.h"
 #include "mstring.h"
@@ -47,9 +48,12 @@ void table_destruct(Table * self){
 	uint64_t index_column = 0;
 	if (self != NULL && self->data != NULL){
 		for (index_row=0; index_row<self->num_rows; index_row++){
-			for (index_column=0; index_column<self->num_columns; index_column++)
-				free(self->data[index_row][index_column]);
-			free(self->data[index_row]);
+			if (self->data[index_row] != NULL){
+				for (index_column=0; index_column<self->num_columns; index_column++)
+					if (self->data[index_row][index_column] != NULL)
+						free(self->data[index_row][index_column]);
+				free(self->data[index_row]);
+			}
 		}
 		free(self->data);
 		self->data = NULL;
@@ -143,6 +147,7 @@ StatusCSV read_csv(char * filename,
 					free(split[index_column]);
 				}
 				free(split);
+				split = NULL;
 				index_row++;
 			}
 		}
@@ -153,5 +158,39 @@ StatusCSV read_csv(char * filename,
 	if (buffer != NULL)
 		free(buffer);
 	return status;
+}
+
+double ** table_as_double(const Table * table,
+						  uint64_t skip_rows,
+						  uint64_t * num_rows,
+						  uint64_t * num_columns){
+	uint64_t index_row = 0;
+	uint64_t index_column = 0;
+	double number = 0;
+	double ** matrix = NULL;
+	char * endptr = NULL;
+	if (   table != NULL
+		&& table->data != NULL
+		&& table->num_rows > 0
+		&& table->num_columns > 0
+		&& (table->num_rows - skip_rows) > 0) {
+		matrix = (double**) malloc(sizeof(double*) * (table->num_rows - skip_rows));
+		for (index_row=0; index_row < (table->num_rows-skip_rows); index_row++)
+			matrix[index_row] = (double*) malloc (sizeof(double) * table->num_columns);
+		if (num_rows != NULL)
+			*num_rows = table->num_rows - skip_rows;
+		if (num_columns != NULL)
+			*num_columns = table->num_columns;
+		for (index_row=skip_rows; index_row<table->num_rows; index_row++){
+			for (index_column=0; index_column<table->num_columns; index_column++){
+				number = strtod(table->data[index_row][index_column], &endptr);
+				if (*endptr != '\0') {
+					number = NAN;
+				}
+				matrix[index_row-skip_rows][index_column] = number;
+			}
+		}
+	}
+	return matrix;
 }
 

@@ -35,6 +35,10 @@ StatusCSV read_csv(char * filename,
 void table_init(Table * self, uint64_t num_rows, uint64_t num_columns);
 void table_destruct(Table * self);
 void table_print(const Table * table);
+double ** table_as_double(const Table * table,
+						  uint64_t skip_rows,
+						  uint64_t * num_rows,
+						  uint64_t * num_columns);
 
 #endif /* _MCSV_H  */
 
