@@ -18,6 +18,8 @@
 #include "test_mmcorr.h"
 #include "test_mlistcont.h"
 #include "test_msqueue.h"
+#include "test_mcsv.h"
+#include "test_mstring.h"
 
 
 void run_suite(Suite * suite, const char * suite_name);
@@ -31,8 +33,10 @@ int main()
 	Suite * s_sma = suite_msma();
     Suite * s_mcorr = suite_mmcorr();
 	Suite * s_list_cont = suite_mlist_cont();
-
-    printf("\n");
+	Suite * s_string = suite_mstring();
+	Suite * s_csv = suite_mcsv();
+    
+	printf("\n");
 	run_suite(s_math, "mmath");
     printf("\n");
 	run_suite(s_list, "mlist");
@@ -46,7 +50,10 @@ int main()
     run_suite(s_mcorr, "mcorr");
 	printf("\n");
 	run_suite(s_list_cont, "mlist_cont");
-
+	printf("\n");
+	run_suite(s_string, "mstring");
+	printf("\n");
+	run_suite(s_csv, "mcsv");
 	return 0;
 } 
 

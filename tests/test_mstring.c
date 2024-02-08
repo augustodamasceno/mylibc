@@ -53,6 +53,49 @@ START_TEST (testStringCountChar) {
 	ck_assert_int_eq(expected, string_count_char(STR, ' '));
 }
 
+START_TEST (testStringIn) {
+	uint64_t expected = 0;
+	const char STR[] = "Identity theft is not a joke, Jim!";
+	uint8_t contain = 0;
+
+	contain = char_in(STR, 'T');
+	expected = 0;
+	ck_assert_int_eq(expected, contain);
+	contain = char_in(STR, '!');
+	expected = 1;
+	ck_assert_int_eq(expected, contain);
+	contain = char_in(STR, 'I');
+	expected = 1;
+	ck_assert_int_eq(expected, contain);
+	contain = char_in(STR, 'a');
+	expected = 1;
+	ck_assert_int_eq(expected, contain);
+	contain = char_in(STR, '\n');
+	expected = 0;
+	ck_assert_int_eq(expected, contain);
+}
+
+
+START_TEST (testStringContains) {
+	uint8_t expected = 0;
+	uint8_t contains = 0;
+	const char STR[] = "I'm sorry, what was the question? ";
+	
+	expected = 1;
+	contains = string_contains(STR, " \n-,");
+	ck_assert_int_eq(expected, contains);
+
+	expected = 0;
+	contains = string_contains(STR, "!");
+	ck_assert_int_eq(expected, contains);
+}
+
+START_TEST (testStringRemove) {
+	const char STR[] = "  Parkour\n\tParkour;";
+	char * stripped = string_remove(STR, " \n\t;");
+	ck_assert_str_eq(stripped, "ParkourParkour");
+}
+
 START_TEST (testStringCut) {
 	/* Size 19. Indexes 0 to 18. */
 	const char STR[] = "You shall not pass!";
@@ -129,6 +172,10 @@ Suite* suite_mstring(){
 
     tcase_add_test(tc_string, testStringSize);
 	tcase_add_test(tc_string, testStringCountChar);
+	tcase_add_test(tc_string, testStringIn);
+	tcase_add_test(tc_string, testStringContains);
+	tcase_add_test(tc_string, testStringCountChar);
+	tcase_add_test(tc_string, testStringRemove);
 	tcase_add_test(tc_string, testStringCut);
 	tcase_add_test(tc_string, testStringCount);
 	tcase_add_test(tc_string, testStringSplit);

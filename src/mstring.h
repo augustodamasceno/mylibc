@@ -11,6 +11,9 @@
 
 #include <stdint.h>
 
+uint8_t char_in(const char * string, const char c);
+uint8_t string_contains(const char * string, const char * chars);
+char * string_remove(const char * string, const char * chars);
 uint64_t string_size(const char * string);
 uint64_t string_count_char(const char * string,
 						   char c);

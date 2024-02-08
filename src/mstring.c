@@ -11,6 +11,62 @@
 
 #include "mstring.h"
 
+uint8_t char_in(const char * string, const char c){
+	uint8_t is_in = 0;
+	uint64_t index = 0;
+	if (string != NULL){
+		while(string[index] != '\0'){
+			if (string[index] == c){
+				is_in = 1;
+				break;
+			}
+			index++;
+		}
+	}
+	return is_in;
+}
+
+uint8_t string_contains(const char * string, const char * chars){
+	uint8_t contain = 0;
+	uint64_t index_string = 0;
+	uint64_t index_chars = 0;
+	if (string != NULL && chars != NULL){
+		while(string[index_string] != '\0'){
+			index_chars = 0;
+			while (chars[index_chars] != '\0'){
+				if (string[index_string] == chars[index_chars]){
+					contain = 1;
+					break;
+				}
+				index_chars++;
+			}
+			if (contain)
+				break;
+			index_string++;
+		}
+	}
+	return contain;
+}
+
+char * string_remove(const char * string, const char * chars){
+	uint64_t index_string = 0;
+	uint64_t index_striped = 0;
+	uint64_t size_string = string_size(string);
+	char * striped = NULL;
+	if (string != NULL && chars != NULL){
+		striped = (char*) malloc(sizeof(char) * (size_string+1));
+		while(string[index_string] != '\0'){
+			if (char_in(chars, string[index_string]) == 0){
+				striped[index_striped] = string[index_string];
+				index_striped++;	
+			}
+			index_string++;
+		}
+		striped[index_striped] = '\0';
+	}
+	return striped;
+}
+
 uint64_t string_size(const char * string){
 	uint64_t counter = 0;
 	if (string != NULL){
