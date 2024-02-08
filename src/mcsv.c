@@ -142,7 +142,7 @@ StatusCSV read_csv(char * filename,
 					table->data[index_row][index_column] = string_remove(split[index_column], " \n");
 					free(split[index_column]);
 				}
-	
+				free(split);
 				index_row++;
 			}
 		}

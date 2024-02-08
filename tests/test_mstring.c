@@ -94,6 +94,7 @@ START_TEST (testStringRemove) {
 	const char STR[] = "  Parkour\n\tParkour;";
 	char * stripped = string_remove(STR, " \n\t;");
 	ck_assert_str_eq(stripped, "ParkourParkour");
+	free(stripped);
 }
 
 START_TEST (testStringCut) {
