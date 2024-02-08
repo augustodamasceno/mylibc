@@ -11,6 +11,7 @@
 
 | Module | Description |  
 | -- | -- |  
+| mcsv | Read a comma-separated values (CSV) file into a Table. Table manipulation. |  
 | mlist | Generic Linked List |  
 | mlistcont | Contiguous Cache-Friendly List |  
 | mmath | Mathematic Lib |  
@@ -18,7 +19,8 @@
 | mprint | Print Lib |  
 | mqueue | Generic Queue |  
 | msma | Simple Moving Average |  
-| msqueue | Generic Static Queue |    
+| msqueue | Generic Static Queue |   
+| mstring | String Manipulation |   
 | mutils | General Utilities |
 
 ## Documentation
