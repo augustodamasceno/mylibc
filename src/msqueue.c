@@ -87,6 +87,20 @@ void squeue_clear(StaticQueue * self){
 	self->size = 0;
 }
 
+double squeue_sum_double(StaticQueue * self){
+	uint64_t print_counter = self->size;
+	uint64_t index = self->front;
+	double sum = 0;	
+	char * memory_location = NULL;
+	while (print_counter > 0) {
+		memory_location = ((char *) self->values) + index * self->size_of_type;
+		index = (index + 1) % self->max_size;
+		print_counter--;
+		sum += *((double*)(memory_location));
+	}
+	return sum;
+}
+
 char * _squeue_str(StaticQueue * self, 
 			const char * format,
 			size_t item_width,

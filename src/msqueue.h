@@ -30,6 +30,7 @@ void squeue_insert(StaticQueue * self, void * read_location);
 void squeue_remove(StaticQueue * self);
 void squeue_front(StaticQueue * self, void * write_location);
 void squeue_clear(StaticQueue * self);
+double squeue_sum_double(StaticQueue * self);
 char * _squeue_str(StaticQueue * self, 
 				   const char * format,
 				   size_t item_width,
