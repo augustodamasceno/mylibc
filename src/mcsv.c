@@ -78,8 +78,8 @@ void table_print(const Table * table){
 	}
 }
 
-StatusCSV read_csv(char * filename, 
-		char * separator,
+StatusCSV read_csv(const char * filename, 
+		const char * separator,
 		Table * table){
 	unsigned char counting_columns = 0;
 	uint64_t num_columns = 0;

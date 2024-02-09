@@ -29,8 +29,8 @@ typedef enum {
 	STATUS_CSV_MALFORMED
 } StatusCSV;
 
-StatusCSV read_csv(char * filename, 
-				   char * separator,
+StatusCSV read_csv(const char * filename, 
+				   const char * separator,
 				   Table * table);
 void table_init(Table * self, uint64_t num_rows, uint64_t num_columns);
 void table_destruct(Table * self);
