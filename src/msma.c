@@ -19,8 +19,10 @@ SimpleMovingAverage * sma_init(uint64_t period){
 	uint64_t max_size = period;
     sma->values = squeue_init(sizeof(double), max_size);
     sma->period = period;
-    sma->sma = 0;
-    sma->sum = 0;
+	sma->sum = 0;
+	sma->ignore_nan = 0;
+	sma->nan_to_zero = 0;
+	sma->nan_counter = 0;
     return sma;
 }
 
@@ -31,23 +33,32 @@ void sma_destruct(SimpleMovingAverage ** self){
 }
 
 void sma_add(SimpleMovingAverage * self, double * value){
-    double write = NAN;
-    if (isnan(*value) == 0){
-        if (self->values->size == self->period){
-            squeue_front(self->values, (void*)&write);
-            self->sum += -1 * write + (*value);
-            squeue_remove(self->values);
-        } else
-            self->sum += *value;
-        squeue_insert(self->values, (void*)value);
-        self->sma = self->sum / (double) self->period;
-    }
+	double value_adjusted = *value;
+	double write = NAN;
+	if (self->ignore_nan == 0 || (self->ignore_nan != 0 && isnan(*value) == 0)){
+		if (self->nan_to_zero != 0 && isnan(*value) != 0){
+			value_adjusted = 0;
+			self->nan_counter++;
+		}
+		if (self->values->size == self->period){
+			squeue_front(self->values, (void*)&write);
+			if (isnan(write) != 0)
+				self->nan_counter--;
+			squeue_remove(self->values);
+			self->sum -= value_adjusted;	
+		}
+		self->sum += value_adjusted;
+		squeue_insert(self->values, (void*)&value_adjusted);
+	}
 }
 
 double sma_get(SimpleMovingAverage * self){
     double value = NAN;
+	double period = (double) self->period;
+	if (self->nan_to_zero != 0)
+		period -= self->nan_counter;
     if (self->values->size == self->period)
-        value = self->sma;
+		value = squeue_sum_double(self->values) / period;		
     return value;
 }
 

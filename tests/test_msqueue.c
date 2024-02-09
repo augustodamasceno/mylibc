@@ -14,11 +14,13 @@
 #include "../src/msqueue.h"
 
 
-START_TEST (testSQueue) {
+START_TEST (testSQueue) {	
+	uint64_t max_size = 4;
 	double read = 1;
 	double write = 0;
+	double sum = 0;
+	double expected = 0;
 	char * str = NULL;
-	uint64_t max_size = 4;
 	StaticQueue * queue = squeue_init(sizeof(double), max_size);
 	ck_assert_ptr_nonnull(queue);
 	ck_assert_int_eq(queue->size, 0);	
@@ -46,6 +48,10 @@ START_TEST (testSQueue) {
 	str = squeue_str(queue, "%.2f", 5);
 	ck_assert_str_eq(str, "[7.00 <- 8.00 <- 9.00 <- 10.00]");
 	free(str);
+
+	sum = squeue_sum_double(queue);
+	expected = 34;
+	ck_assert_double_eq(expected, sum);
 
 	squeue_destruct(&queue);
 	ck_assert_ptr_null(queue);

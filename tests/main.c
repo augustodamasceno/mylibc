@@ -30,12 +30,12 @@ int main()
 	Suite * s_list = suite_mlist();
     Suite * s_queue = suite_mqueue();
 	Suite * s_squeue = suite_msqueue();
-	Suite * s_sma = suite_msma();
     Suite * s_mcorr = suite_mmcorr();
 	Suite * s_list_cont = suite_mlist_cont();
 	Suite * s_string = suite_mstring();
 	Suite * s_csv = suite_mcsv();
-    
+    Suite * s_sma = suite_msma();
+	
 	printf("\n");
 	run_suite(s_math, "mmath");
     printf("\n");
@@ -45,8 +45,6 @@ int main()
     printf("\n");
 	run_suite(s_squeue, "msqueue");
     printf("\n");
-    run_suite(s_sma, "msma");
-    printf("\n");
     run_suite(s_mcorr, "mcorr");
 	printf("\n");
 	run_suite(s_list_cont, "mlist_cont");
@@ -54,6 +52,9 @@ int main()
 	run_suite(s_string, "mstring");
 	printf("\n");
 	run_suite(s_csv, "mcsv");
+	printf("\n");
+    run_suite(s_sma, "msma");
+
 	return 0;
 } 
 
