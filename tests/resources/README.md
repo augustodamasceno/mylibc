@@ -5,7 +5,7 @@
 * Set seed to 42;  
 * Generate a column with 100 numbers in the interval [0, 1);  
 * Calculates the simple moving average (SMA) with window 5;  
-* Saves all 100 numbers (first column) and 100 iterations of the SMA (second column) with 6 decimal places.  
+* Saves all 100 numbers (first column) and 100 iterations of the SMA (second column) with 12 decimal places.  
 
 ## Code Sample  
 ```python
@@ -23,7 +23,7 @@ if __name__ == "__main__":
   nan_values = np.full(window_size - 1, np.nan) 
   sma_with_nan = np.concatenate((nan_values, sma))
   data = np.column_stack((random_nums, sma_with_nan))
-  np.savetxt('sma.csv', data, delimiter=',', header='Data, SMA', comments='', fmt='%f')
+  np.savetxt('sma.csv', data, delimiter=',', header='Data, SMA', comments='', fmt='%.12f')
 ```
 
 # sma-nan.csv  
@@ -47,9 +47,9 @@ if __name__ == "__main__":
   nan_values = np.full(window_size - 1, np.nan) 
   sma_with_nan = np.concatenate((nan_values, sma))
   data = np.column_stack((random_nums, sma_with_nan))
-  np.savetxt('sma-nan.csv', data, delimiter=',', header='Data, SMA', comments='', fmt='%f')
+  np.savetxt('sma-nan.csv', data, delimiter=',', header='Data, SMA', comments='', fmt='%.12f')
 ```
 
 # SHA1SUMS
-> 2a5a9c4b2c7dbfe9d336c241518d2ab681bd8b79  sma-nan.csv
-> c48b8b0b1cd28b6cf32d35daa7c77a93a2f3d3a5  sma.csv
+fbeb357843c725cfb5efdfe8548c1d41e7068441  sma-nan.csv
+5bb0905b8e5e21322af3907d7848bd876fb899dd  sma.csv
