@@ -28,8 +28,10 @@
 
 ## Key Features
 * The data structures are generic  
-* Generic multidimensional matrix in mmath  
-* Contiguous cache-friendly list
+* Multidimensional matrix  
+* Structures for optimized code  
+* String manipulation (count, contains, split, cut, etc)  
+* Read CSV into a Table (cells are strings and the Table can be converted to double)  
 
 ## A complete reference for Basic and Advanced Arduino Programming  
 * https://github.com/augustodamasceno/notes-arduino
