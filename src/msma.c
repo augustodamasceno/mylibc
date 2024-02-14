@@ -6,9 +6,7 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-/* srand, rand, malloc, free */
 #include <stdlib.h>
-/* nan */
 #include <math.h>
 
 #include "msma.h"
@@ -19,7 +17,6 @@ SimpleMovingAverage * sma_init(uint64_t period){
 	uint64_t max_size = period;
     sma->values = squeue_init(sizeof(double), max_size);
     sma->period = period;
-	sma->sum = 0;
 	sma->ignore_nan = 0;
 	sma->nan_to_zero = 0;
 	sma->nan_counter = 0;
@@ -33,32 +30,31 @@ void sma_destruct(SimpleMovingAverage ** self){
 }
 
 void sma_add(SimpleMovingAverage * self, double * value){
-	double value_adjusted = *value;
 	double write = NAN;
 	if (self->ignore_nan == 0 || (self->ignore_nan != 0 && isnan(*value) == 0)){
-		if (self->nan_to_zero != 0 && isnan(*value) != 0){
-			value_adjusted = 0;
-			self->nan_counter++;
-		}
 		if (self->values->size == self->period){
 			squeue_front(self->values, (void*)&write);
 			if (isnan(write) != 0)
 				self->nan_counter--;
 			squeue_remove(self->values);
-			self->sum -= value_adjusted;	
 		}
-		self->sum += value_adjusted;
-		squeue_insert(self->values, (void*)&value_adjusted);
+		if (isnan(*value) != 0)
+			self->nan_counter++;
+		squeue_insert(self->values, (void*)value);
 	}
 }
 
 double sma_get(SimpleMovingAverage * self){
     double value = NAN;
 	double period = (double) self->period;
-	if (self->nan_to_zero != 0)
+	if (self->ignore_nan == 0 && self->nan_to_zero != 0)
 		period -= self->nan_counter;
-    if (self->values->size == self->period)
-		value = squeue_sum_double(self->values) / period;		
-    return value;
+    if (self->values->size == self->period){
+		if (self->nan_to_zero != 0)
+			value = squeue_sumnan_double(self->values) / period;	
+		else	
+			value = squeue_sum_double(self->values) / period;		
+	}
+	return value;
 }
 

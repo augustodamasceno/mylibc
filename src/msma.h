@@ -20,7 +20,6 @@ typedef struct {
 	uint64_t nan_counter;
 	uint8_t ignore_nan;
 	uint8_t nan_to_zero;
-	double sum;
 } SimpleMovingAverage;
 
 SimpleMovingAverage * sma_init(uint64_t period);
