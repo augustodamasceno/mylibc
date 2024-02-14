@@ -9,9 +9,7 @@
 #ifndef _MSQUEUE_H
 #define _MSQUEUE_H
 
-/* srand, rand, malloc, free */
 #include <stdlib.h>
-/* Integer Types */
 #include <stdint.h>
 
 
@@ -30,7 +28,9 @@ void squeue_insert(StaticQueue * self, void * read_location);
 void squeue_remove(StaticQueue * self);
 void squeue_front(StaticQueue * self, void * write_location);
 void squeue_clear(StaticQueue * self);
+double _squeue_sum_double(StaticQueue * self, uint8_t ignore_nan);
 double squeue_sum_double(StaticQueue * self);
+double squeue_sumnan_double(StaticQueue * self);
 char * _squeue_str(StaticQueue * self, 
 				   const char * format,
 				   size_t item_width,

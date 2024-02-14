@@ -7,10 +7,9 @@
  */
 
 #include <stdlib.h>
-/* sprintf, fprintf, stderr */
 #include <stdio.h>
-/* memcpy, strchr */
 #include <string.h>
+#include <math.h>
 
 #include "msqueue.h"
 #include "mprint.h"
@@ -20,6 +19,7 @@ StaticQueue * squeue_init(size_t size_of_type, uint64_t max_size){
     StaticQueue * squeue = NULL;
 	if(max_size > 0){ 
 		squeue = (StaticQueue *) malloc(sizeof(StaticQueue));
+		squeue->size = 0;
 		squeue->max_size = max_size;
 		squeue->size_of_type = size_of_type;
 		squeue->values = malloc(size_of_type * max_size);
@@ -49,7 +49,7 @@ void squeue_insert(StaticQueue * self, void * read_location){
 		} else if (self->size == self->max_size){
 			self->front = (self->front + 1) % self->max_size;
 			self->back = (self->back + 1) % self->max_size;
-			self->size--;
+			self->size--; // The size must remain the same.
 		} else {
 			self->back = (self->back + 1) % self->max_size;
 		}
@@ -63,12 +63,10 @@ void squeue_remove(StaticQueue * self){
 	if (self != NULL && self->size > 0){
 		if (self->size == 1){
 			squeue_clear(self);
-		} else if (self->front == 0)
-			self->front = self->max_size - 1;
-		else
-			self->front--;
-	
-		self->size--;
+		} else {
+			self->front = (self->front + 1) % self->max_size;
+			self->size--;
+		}
 	}
 }
 
@@ -77,8 +75,7 @@ void squeue_front(StaticQueue * self, void * write_location){
 	if (self != NULL && self->size > 0){
 		memory_location += self->size_of_type * self->front;
 		memcpy(write_location, memory_location, self->size_of_type);
-	} else
-		write_location = NULL;
+	}
 }
 
 void squeue_clear(StaticQueue * self){
@@ -87,7 +84,7 @@ void squeue_clear(StaticQueue * self){
 	self->size = 0;
 }
 
-double squeue_sum_double(StaticQueue * self){
+double _squeue_sum_double(StaticQueue * self, uint8_t ignore_nan){
 	uint64_t print_counter = self->size;
 	uint64_t index = self->front;
 	double sum = 0;	
@@ -96,8 +93,23 @@ double squeue_sum_double(StaticQueue * self){
 		memory_location = ((char *) self->values) + index * self->size_of_type;
 		index = (index + 1) % self->max_size;
 		print_counter--;
-		sum += *((double*)(memory_location));
+		if (ignore_nan == 0 
+			|| (ignore_nan != 0 
+			    && isnan(*((double*)(memory_location))) == 0))
+			sum += *((double*)(memory_location));
 	}
+	return sum;
+}
+
+double squeue_sum_double(StaticQueue * self){
+	uint8_t ignore_nan = 0;
+	double sum = _squeue_sum_double(self, ignore_nan); 	
+	return sum;
+}
+
+double squeue_sumnan_double(StaticQueue * self){
+	uint8_t ignore_nan = 1;
+	double sum = _squeue_sum_double(self, ignore_nan); 	
 	return sum;
 }
 
