@@ -65,12 +65,12 @@ START_TEST (testTableAsDouble) {
 	ck_assert_int_eq(status, STATUS_CSV_SUCCESS);
 
 	matrix = table_as_double(&table, skip_rows, &num_rows, &num_columns);
-	ck_assert_double_eq(0.427541, matrix[0][0]);
-	ck_assert_double_eq(0.555263, matrix[0][1]);
-	ck_assert_double_eq(0.025419, matrix[1][0]);
-	ck_assert_double_eq(0.448091, matrix[1][1]);
-	ck_assert_double_eq(0.107891, matrix[2][0]);
-	ck_assert_double_eq(0.315476, matrix[2][1]);
+	ck_assert_double_eq(0.427541018359, matrix[0][0]);
+	ck_assert_double_eq(0.555262764326, matrix[0][1]);
+	ck_assert_double_eq(0.025419126744, matrix[1][0]);
+	ck_assert_double_eq(0.448091150161, matrix[1][1]);
+	ck_assert_double_eq(0.107891426993, matrix[2][0]);
+	ck_assert_double_eq(0.315475999568, matrix[2][1]);
 
 	for (index_row=0; index_row<num_rows; index_row++)
 		free(matrix[index_row]);
