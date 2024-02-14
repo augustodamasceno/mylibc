@@ -7,7 +7,6 @@
  */
 
 #include <stdlib.h>
-/* sprintf, fprintf, stderr */
 #include <stdio.h>
 #include <math.h>
 
@@ -78,22 +77,24 @@ START_TEST (testSMAAddGet) {
 	sma_destruct(&sma);
 }
 
-START_TEST (testSMAMath) {
-	double value = 0;
-	double get_val = 0;
-	double is_nan = 0;
+START_TEST (testSMAMath) {	
 	const double NUM_DECIMAL_PLACES = 10.0;
-	double get_val_rounded = 0;
-	double value_rounded = 0;
-	uint64_t num_rows = 0;
-	uint64_t num_columns = 0;
-	uint64_t skip_rows = 1;
-	uint64_t index_row = 0;
 	const uint64_t period = 5;
 	const uint64_t DATA_COLUMN = 0;
 	const uint64_t SMA_COLUMN = 1;
 	const char DATA_FILENAME[23] = "resources/sma-nan.csv";
 	const char SEPARATOR[2] = ",";	
+	uint64_t num_rows = 0;
+	uint64_t num_columns = 0;
+	uint64_t skip_rows = 1;
+	uint64_t index_row = 0;
+	double data_val = 0;
+	double sma_val = 0;
+	double is_nan = 0;
+	double sma_val_rounded = 0;
+	double data_val_rounded = 0;
+	double round_mult = pow(10, NUM_DECIMAL_PLACES);
+	double value = 0;
 	double ** matrix;
 	SimpleMovingAverage * sma = sma_init(period);
 	sma->nan_to_zero = 1;
@@ -112,22 +113,24 @@ START_TEST (testSMAMath) {
 	for (index_row=0; index_row<num_rows; index_row++){
 		value = matrix[index_row][DATA_COLUMN];
 		sma_add(sma, &value);
-		get_val = sma_get(sma);
-		is_nan = isnan(get_val);
-		value = matrix[index_row][SMA_COLUMN];
+		sma_val = sma_get(sma);
+		is_nan = isnan(sma_val);
+		data_val = matrix[index_row][SMA_COLUMN];
 		if (is_nan){
-			is_nan = isnan(value);
+			is_nan = isnan(data_val);
 			if (is_nan == 0)
-				printf("\n\ttestSMAMath: Mismatch NAN in the row with index %llu (SMA: %f, DATA: %f)\n", 
-					   (unsigned long long int)index_row, get_val, value);
+				printf("\n\ttestSMAMath: Mismatch NAN in the row with index %llu (SMA: %.12f, DATA: %.12f)\n", 
+					   (unsigned long long int)index_row, sma_val, data_val);
 			ck_assert_int_gt(is_nan, 0);
 		} else {
-			value_rounded = (long long int)(value * NUM_DECIMAL_PLACES);
-		   	get_val_rounded = (long long int)(get_val * NUM_DECIMAL_PLACES);
-			if (value_rounded != get_val_rounded)	
-			printf("\n\ttestSMAMath: Mismatch values in the row with index %llu (SMA: %f DATA: %f)\n",
-					   (unsigned long long int)index_row, get_val, value);	
-			ck_assert_int_eq(value, get_val);
+			data_val_rounded = (long long int)(data_val * round_mult);
+		   	sma_val_rounded = (long long int)(sma_val * round_mult);
+			data_val_rounded /= round_mult;
+			sma_val_rounded /= round_mult;
+			if (data_val_rounded != sma_val_rounded)	
+			printf("\n\ttestSMAMath: Mismatch values in the row with index %llu (SMA: %.12f DATA: %.12f)\n",
+					   (unsigned long long int)index_row, sma_val, data_val);	
+			ck_assert_int_eq(data_val_rounded, sma_val_rounded);
 		}
 	}
 
