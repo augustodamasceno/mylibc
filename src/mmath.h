@@ -13,7 +13,7 @@
 #include <stdint.h>
 /* srand, rand, malloc, free */
 #include <stdlib.h>
-/* pow */
+/* pow, isnan, sqrt */
 #include <math.h>
 /* time, CLOCKS_PER_SEC */
 #include <time.h>
@@ -88,8 +88,8 @@ double getQuantizationLevel(uint64_t binary, uint64_t nbits, double minValue, do
 /* Vector Random Permutation */
 void permutation(int * vec, uint64_t size);
 
-double mean(const double * data, uint64_t size);
+double mean(const double * data, uint64_t size, uint8_t ignore_nan, uint8_t nan_to_zero);
 
-double stddev(const double * data, uint64_t size);
+double stddev(const double * data, uint64_t size, uint8_t ignore_nan);
 
 #endif /* _MMATH_H  */

@@ -138,30 +138,64 @@ void permutation(int * vec, uint64_t size)
 }
 
 
-double mean(const double * data, uint64_t size) {
+double mean(const double * data, uint64_t size, uint8_t ignore_nan, uint8_t nan_to_zero) {
 	int i = 0;
+	uint64_t nan_counter = 0;
 	double sum = 0.0;
 	double result = 0.0;
+	double data_size = (double) size;
 
-	for (i=0; i<size; i++)
-		sum += data[i];
-	result = sum / size;
+	for (i=0; i<size; i++){
+		if (isnan(data[i]) == 0)
+			sum += data[i];
+		else
+			nan_counter++;
+	}
+
+	/* Case ignore_nan - nan_to_zero is not used */
+	if (ignore_nan)
+		data_size -= (double) nan_counter;
+	/* Case nan_to_zero disabled - do not accept NAN 
+	 * Case nan_to_zero enabled - do nothing (NAN already converted to zero) */
+	else if ((nan_to_zero == 0) && (nan_counter > 0) )
+		data_size = 0;
+
+	if (data_size == 0)
+		result = NAN;
+	else
+		result = sum / data_size;
 
 	return result;
 }
 
-double stddev(const double * data, uint64_t size) {
+double stddev(const double * data, uint64_t size, uint8_t ignore_nan) {
 	int i = 0; 
-	double mean_val = mean(data, size);
+	uint8_t nan_to_zero = 0;
+	uint64_t nan_counter = 0;
+	double mean_val = mean(data, size, ignore_nan, nan_to_zero);
 	double sum_squared_diff = 0.0;
-	double result = 0.0;
+	double result = NAN;
+	double data_size = (double) size;
 
-	for (int i=0; i<size; i++){
-		sum_squared_diff += (data[i] - mean_value) 
-			  	  * (data[i] - mean_value);
-	}
+	if (isnan(mean_val) == 0){
+		for (int i=0; i<size; i++){
+			if (isnan(data[i]) == 0){
+				sum_squared_diff += (data[i] - mean_val) 
+					  	  		  * (data[i] - mean_val);
+			} else
+				nan_counter++;
+		}
+	} else
+		data_size = 0.0;
 
-	result = sqrt(sum_squared_diff / size);
+	if (ignore_nan)
+		data_size -= (double) nan_counter;
+
+	if (data_size == 0.0)
+		result = NAN;
+	else
+		result = sqrt(sum_squared_diff / data_size);
+
 	return result;
 }
 
