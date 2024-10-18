@@ -1,6 +1,6 @@
 /* Mylibc Math
  *
- * Copyright (c) 2018-2023, Augusto Damasceno.
+ * Copyright (c) 2018-2024, Augusto Damasceno.
  * All rights reserved.
  * 
  * SPDX-License-Identifier: BSD-2-Clause
@@ -135,5 +135,33 @@ void permutation(int * vec, uint64_t size)
 		vec[i] = vec[r];
 		vec[r] = swap;
 	}
+}
+
+
+double mean(const double * data, uint64_t size) {
+	int i = 0;
+	double sum = 0.0;
+	double result = 0.0;
+
+	for (i=0; i<size; i++)
+		sum += data[i];
+	result = sum / size;
+
+	return result;
+}
+
+double stddev(const double * data, uint64_t size) {
+	int i = 0; 
+	double mean_val = mean(data, size);
+	double sum_squared_diff = 0.0;
+	double result = 0.0;
+
+	for (int i=0; i<size; i++){
+		sum_squared_diff += (data[i] - mean_value) 
+			  	  * (data[i] - mean_value);
+	}
+
+	result = sqrt(sum_squared_diff / size);
+	return result;
 }
 

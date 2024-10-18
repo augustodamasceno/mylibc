@@ -1,6 +1,6 @@
 /* Mylibc Math
  *
- * Copyright (c) 2018-2023, Augusto Damasceno.
+ * Copyright (c) 2018-2024, Augusto Damasceno.
  * All rights reserved.
  * 
  * SPDX-License-Identifier: BSD-2-Clause
@@ -87,5 +87,9 @@ double getQuantizationLevel(uint64_t binary, uint64_t nbits, double minValue, do
 
 /* Vector Random Permutation */
 void permutation(int * vec, uint64_t size);
+
+double mean(const double * data, uint64_t size);
+
+double stddev(const double * data, uint64_t size);
 
 #endif /* _MMATH_H  */
